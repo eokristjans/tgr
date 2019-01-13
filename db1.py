@@ -42,3 +42,37 @@ print(P)
 
 print(Q)
 # -2.001480725434141
+
+
+### Dæmi 2
+a = -12345678987654321
+b = 123
+
+ar_minus = -111111111
+ar_plus  =  111111111
+
+c = (ar_plus * ar_minus)
+print(a==c)
+#True
+
+#Sé að a og c eru geymdar sem -12345678987654320 svo ég prófa þetta... áhugavert
+d = -12345678987654320
+print(a==d)
+#False
+
+#Lausn verkefnis:
+ans1 = a + (a*a + b*b)**(1/2)
+
+print("Verri aðferð prentað sem f með 2 aukastöfum: %.4f" % (ans1))
+# Verri aðferð prentað sem f með 2 aukastöfum: 0.0000
+
+print("Verri aðferð prentað sem e með 2 aukastöfum: %.4e" % (ans1))
+# Verri aðferð prentað sem e með 2 aukastöfum: 0.0000e+00
+
+ans2 = -b*b / (a-(a*a + b*b)**(1/2))
+
+print("Betri aðferð prentað sem f með 2 aukastöfum: %.4f" % (ans2))
+# Betri aðferð prentað sem f með 2 aukastöfum: 0.0000
+
+print("Betri aðferð prentað sem e með 2 aukastöfum: %.4e" % (ans2))
+# Betri aðferð prentað sem e með 2 aukastöfum: 6.1272e-13
