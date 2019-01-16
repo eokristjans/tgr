@@ -1,5 +1,74 @@
 import numpy as np 
 
+##### Dæmablað 2 ######
+# Dæmi 2
+def fpitr(g,x,n):
+    for i in range(n):
+        x = g(x)
+        print(x)
+        
+r = 2**(1/2)
+g1 = lambda x: (x/2 + 1/x)
+g2 = lambda x: (2*x/3 + 2/(3*x))
+g3 = lambda x: (3*x/4 + 1/(2*x))
+g4 = lambda x: np.cos(x)
+
+lausn221 = fpitr(g1,r,10)
+
+
+# Dæmi 1
+# Notkun:   helmadf(f,a,b)
+# Fyrir:    f er samfellt fall skilgreint á  bilinu [a,b]
+#           a < b eru tölur þannig að f(a)*f(b) < 0
+#           TOL er tala
+# Eftir:    (c,fc) tuple þar sem c er rót f og fc er f(c)
+def helmadf(f,a,b,TOL):
+    fa=f(a)
+    fb=f(b)
+    while (b-a)/2 > TOL:
+        c=(a+b)/2
+        fc=f(c)
+#        print(fc)
+        if fa*fc <= 0:
+            b=c
+            fb=fc
+        else:
+            a=c
+            fa=fc
+    return c,fc
+    
+
+# Skilgreinum fallið sem við viljum finna rót á
+f = lambda x: (np.linalg.det((np.array([[1,2,3,x],[4,5,x,6],[7,x,8,9],[x,10,11,12]]))) - 1000)
+# Prófum ýmsar prentanir til að finna möguleg gildi a og b í helmingunaraðferðinni, m.a.
+# for i in range(-20,20,2):
+#     print(i, " ... ", f(i))
+# Veljum: 
+a1 = -18
+b1 = -16
+a2 = 8
+b2 = 10
+TOL = 0.5e-6
+lausn1 = helmadf(f,a1,b1,TOL)
+# Out[30]: (-17.188498497009277, 0.004138882266488508)
+print("x1 = %.6f" % lausn1[0])
+# x1 = -17.188498
+lausn2 = helmadf(f,a2,b2,TOL)
+# Out[32]: (9.708298683166504, -0.0005025448032256463)
+print("x2 = %.6f" % lausn2[0])
+# x2 = 9.708299
+
+
+
+
+
+
+
+
+
+
+##### Dæmablað 1 ######
+# Dæmi 1
 # Notkun:   nested_multiplication(d,c,x,b)
 # Fyrir:    d er heiltala, stig margliðunnar
 #           c er tuple, stuðlar margliðunnar
