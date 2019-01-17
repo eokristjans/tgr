@@ -58,13 +58,9 @@ lausn2 = helmadf(f,a2,b2,TOL)
 print("x2 = %.6f" % lausn2[0])
 # x2 = 9.708299
 
-
-
-
-
-
-
-
+# Exercise 1.1 Computer Problems, Dæmi 9
+ex11c9 = lambda x: (np.pi)*x*x*(1-x/3) - 1
+helmadf(ex11c9,0,1,1e-4)
 
 
 ##### Dæmablað 1 ######
