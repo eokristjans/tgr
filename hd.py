@@ -70,7 +70,10 @@ print("rot f(x) m.v. snidilsadferd og eina itrun er:                  ", x2sm)
 print("rot f(x) m.v. snidilsadferd og tvaer itranir er:               ", x3sm)
 print("rot f(x) m.v. adferd rangrar stodu og tvaer itranir er:        ", x2fp)
 print("rot f(x) m.v. andhverfa kvadratiska bruun og tvaer itranir er: ", x2iqi)
-
+# rot f(x) m.v. snidilsadferd og eina itrun er:                   1.0929065801160904
+# rot f(x) m.v. snidilsadferd og tvaer itranir er:                1.1193566855644101
+# rot f(x) m.v. adferd rangrar stodu og tvaer itranir er:         1.1193566855644101
+# rot f(x) m.v. andhverfa kvadratiska bruun og tvaer itranir er:  1.1292724601823607
 
 
 ##### Dæmi 2
