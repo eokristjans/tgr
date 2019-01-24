@@ -1,7 +1,79 @@
 import numpy as np 
+import math
 
-##### Dæmablað 2 ######
-# Dæmi 2
+########## Dæmablað 2 ##########
+##### Dæmi 3
+
+# Notkun:   xn = secant_method(f,x0,x1,n)
+# Fyrir:    f er samfelld einundaradgerd
+#           skilgreind á  bilinu [a,b].
+#           x0 og x1 eru tolur sem f raedur vid
+#           n er tala
+# Gildi:    xn er rot n-ta talan
+#           i runu sem nalgar rot f,
+#           reiknud með snidilsadferd
+def secant_method(f,x0,x1,n):
+    if n == 1:
+        return x1
+    else:
+        x2 = x1 - (f(x1)*(x1-x0))/(f(x1)-f(x0))
+        return secant_method(f,x1,x2,n-1)
+
+
+# Notkun:   false_position(f,a,b)
+# Fyrir:    f er samfelld einundaradgerd
+#           skilgreind á  bilinu [a,b].
+#           a < b eru tölur þannig að f(a)*f(b) < 0
+#           n er jakvaed heiltala
+# Eftir:    (c,fc) tuple þar sem c er rot f og fc er f(c)
+def false_position(f,a,b,n):
+    fa=f(a)
+    fb=f(b)
+    for i in range (n,0,-1):
+        c=(b*fa - a*fb)/(fa-fb)
+        fc=f(c)
+#        print(fc)
+        if fa*fc <= 0:
+            b=c
+            fb=fc
+        else:
+            a=c
+            fa=fc
+    return c,fc
+    
+# andhverf kvadratisk bruun
+def IQI(f,x0,x1,x2,n):
+    if n == 0:
+        return x2
+    else:
+        fx0, fx1, fx2 = f(x0), f(x1), f(x2)
+        q = fx0/fx1
+        r = fx2/fx1
+        s = fx2/fx0
+        num = r*(r-q)*(x2-x1) + (1-r)*s*(x2-x0)
+        den = (q-1)*(r-1)*(s-1)
+        x3 = x2 - num/den
+        return IQI(f,x1,x2,x3,n-1)
+    
+        
+x0, x1, x2 = 1, 2, 3
+
+f = lambda x: math.exp(x) + math.sin(x) - 4
+x2sm = secant_method(f,x0,x1,2)
+x3sm = secant_method(f,x0,x1,3)
+
+x2fp = false_position(f,x0,x1,2)[0]
+
+x2iqi = IQI(f,x0,x1,x2,2)
+
+print("rot f(x) m.v. snidilsadferd og eina itrun er:                  ", x2sm)
+print("rot f(x) m.v. snidilsadferd og tvaer itranir er:               ", x3sm)
+print("rot f(x) m.v. adferd rangrar stodu og tvaer itranir er:        ", x2fp)
+print("rot f(x) m.v. andhverfa kvadratiska bruun og tvaer itranir er: ", x2iqi)
+
+
+
+##### Dæmi 2
 def fpitr(g,x,n):
     for i in range(n):
         x = g(x)
@@ -63,7 +135,7 @@ ex11c9 = lambda x: (np.pi)*x*x*(1-x/3) - 1
 helmadf(ex11c9,0,1,1e-4)
 
 
-##### Dæmablað 1 ######
+########## Dæmablað 1 ##########
 # Dæmi 1
 # Notkun:   nested_multiplication(d,c,x,b)
 # Fyrir:    d er heiltala, stig margliðunnar
