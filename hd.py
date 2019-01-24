@@ -56,7 +56,7 @@ def IQI(f,x0,x1,x2,n):
         return IQI(f,x1,x2,x3,n-1)
     
         
-x0, x1, x2 = 1, 2, 3
+x0, x1, x2 = 1, 2, 0
 
 f = lambda x: math.exp(x) + math.sin(x) - 4
 x2sm = secant_method(f,x0,x1,2)
