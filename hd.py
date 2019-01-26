@@ -1,6 +1,97 @@
 import numpy as np 
 import math
 
+########## Dæmablað 3 ##########
+##### Dæmi 2
+'''
+Write a script to take a matrix A as input and output L and U.
+No row exchanges. Program shuts down if zero pivot.
+'''
+
+# Breytir I=[] i einingafylki af vidd n
+# ath ad I skal vera fyrirfram skilgreint I=[] (tomur listi)
+def myI(I,n):
+    for i in range(n):
+        I.append([])
+        for j in range(n):
+            if i==j:
+                I[i].append(1.0)
+            else:
+                I[i].append(0.0)
+
+# Prentar fylki a lesanlegri mata
+def printArray(A):
+    n = len(A)
+    for i in range(n):
+        print(A[i])
+    print()
+            
+
+# Notkun:   (L,U) = LU(A)
+# Fyrir:    A er np.array fylki
+# Eftir:    L er nedra thrihyrningsfylki
+#           U er efra thrihyrningsfylki
+#           L*U = A
+#   Haettir keyrslu ef forritid rekst a 0-forustustudul
+def LU(A):
+    n = len(A)
+    L = []
+    myI(L,n)
+    for j in range(n):
+        for i in range(j+1,n):
+            mDen = A[j][j]
+            # Haettir frekar en ad deila med 0
+            if mDen == 0.0:
+                print("Forrit haetti keyrslu snemma. Getur ekki deilt med 0")
+                return L,A
+            mNum = A[i][j]
+            m = mNum/mDen
+            L[i][j]=m
+            for k in range(j,n):
+                A[i][k] -= m*A[j][k]
+    return L,A
+    
+# Prufufall 1
+A1 = [[4.0,2.0,0.0],[4.0,4.0,2.0],[2.0,2.0,3.0]]
+luA1 = LU(A1)
+print("L:")
+printArray(luA1[0])
+print("U:")
+printArray(luA1[1])
+
+# Prufufall 2
+A2 = [[4.0,2.0,0.0],[4.0,2.0,2.0],[2.0,2.0,3.0]]
+luA2 = LU(A2)
+print("L:")
+printArray(luA2[0])
+print("U:")
+printArray(luA2[1])
+
+''' UTTAK:
+L:
+[1.0, 0.0, 0.0]
+[1.0, 1.0, 0.0]
+[0.5, 0.5, 1.0]
+
+U:
+[4.0, 2.0, 0.0]
+[0.0, 2.0, 2.0]
+[0.0, 0.0, 2.0]
+
+Forrit haetti keyrslu snemma. Getur ekki deilt med 0
+L:
+[1.0, 0.0, 0.0]
+[1.0, 1.0, 0.0]
+[0.5, 0.0, 1.0]
+
+U:
+[4.0, 2.0, 0.0]
+[0.0, 0.0, 2.0]
+[0.0, 1.0, 3.0]
+'''
+
+
+
 ########## Dæmablað 2 ##########
 ##### Dæmi 3
 
