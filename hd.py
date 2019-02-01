@@ -4,15 +4,6 @@ import numpy.linalg as lin
 
 ########## Dæmablað 3 ##########
 ##### Dæmi 3
-'''
- Computer Problems 2.3.1
-For the nxn matrix with entries A[i][j] = 5/(i+2(j+1)), set x = [1,...,1] and Ax=b.
-Computer the double precision computed solution, x_c.
-Find the 
-    infinity norm (óendanlega normið) of the forward error and the error magnification factor of the problem Ax=b, 
-and compare it with the condition number of A: (a) n=6, (b) n = 10
-
-'''
 
 # Notkun:   (L,U) = LU(A)
 # Fyrir:    A er np.array fylki
