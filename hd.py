@@ -3,6 +3,263 @@ import math
 import numpy.linalg as lin
 
 ########## Dæmablað 3 ##########
+##### Dæmi 3
+'''
+ Computer Problems 2.3.1
+For the nxn matrix with entries A[i][j] = 5/(i+2(j+1)), set x = [1,...,1] and Ax=b.
+Computer the double precision computed solution, x_c.
+Find the 
+    infinity norm (óendanlega normið) of the forward error and the error magnification factor of the problem Ax=b, 
+and compare it with the condition number of A: (a) n=6, (b) n = 10
+
+'''
+
+# Notkun:   (L,U) = LU(A)
+# Fyrir:    A er np.array fylki
+# Eftir:    L er nedra thrihyrningsfylki
+#           U er efra thrihyrningsfylki
+#           L*U = A
+#   Haettir keyrslu ef forritid rekst a 0-forustustudul
+def LU(A):
+    n = len(A)
+    L = []
+    myI(L,n)
+    for j in range(n):
+        for i in range(j+1,n):
+            mDen = A[j][j]
+            # Haettir frekar en ad deila med 0
+            if mDen == 0.0:
+                print("Forrit haetti keyrslu snemma. Getur ekki deilt med 0")
+                return L,A
+            mNum = A[i][j]
+            m = mNum/mDen
+            L[i][j]=m
+            for k in range(j,n):
+                A[i][k] -= m*A[j][k]
+    return L,A
+
+
+def cp2_3_1(A,n):
+    for i in range(n):
+        A.append([])
+        for j in range(n):
+            A[i].append(5/(i+2*(j+1)))
+
+
+A6 = []
+cp2_3_1(A6,6)
+A6 = np.array(A6)
+#print(A6)
+
+print("n = 6 gefur eftirfarnadi") 
+print("Ástandstala (condition number) með n=6 er:", lin.cond(A6,math.inf))
+
+
+x6 = np.ones(6)
+#print(x6)
+
+b6 = A6 @ x6
+#print(b6)
+
+
+A6LU = LU(A6)
+A6L = np.array(A6LU[0])
+A6U = np.array(A6LU[1])
+#print(A6L)
+#print(A6U)
+
+y6c = lin.solve(A6L,b6)
+#print(y6c)
+
+x6c = lin.solve(A6U,y6c)
+#print(x6c)
+
+FE6num = lin.norm(x6c - x6, math.inf)
+FE6den = lin.norm(x6, math.inf)
+FE6 = FE6num/FE6den
+print("Forward Error með LU þáttún:", FE6)
+
+BE6num = lin.norm((A6 @ x6c) - b6, math.inf)
+BE6den = lin.norm(b6, math.inf)
+BE6 = BE6num/BE6den
+print("Backward Error með LU þáttun:", BE6)
+
+ErrMagFac6 = FE6 / BE6
+print("Error Magnification Factor með LU þáttun:", ErrMagFac6)
+
+
+A6 = []
+cp2_3_1(A6,6)
+A6 = np.array(A6)
+#print(A6)
+
+x6 = np.ones(6)
+#print(x6)
+
+b6 = A6 @ x6
+#print(b6)
+
+x6c = lin.solve(A6,b6)
+#print(x6c)
+
+FE6num = lin.norm(x6c - x6, math.inf)
+FE6den = lin.norm(x6, math.inf)
+FE6 = FE6num/FE6den
+print("Forward Error án LU þáttun:", FE6)
+
+BE6num = lin.norm((A6 @ x6c) - b6, math.inf)
+BE6den = lin.norm(b6, math.inf)
+BE6 = BE6num/BE6den
+print("Backward Error án LU þáttun:", BE6)
+
+ErrMagFac6 = FE6 / BE6
+print("Error Magnification Factor án LU þáttun:", ErrMagFac6)
+
+print()
+
+
+
+
+
+A10 = []
+cp2_3_1(A10,10)
+A10 = np.array(A10)
+#print(A10)
+
+print("n = 10 gefur eftirfarnadi") 
+print("Ástandstala (condition number) með n=10 er:", lin.cond(A10,math.inf))
+
+x10 = np.ones(10)
+#print(x10)
+
+b10 = A10 @ x10
+#print(b10)
+
+
+A10LU = LU(A10)
+A10L = np.array(A10LU[0])
+A10U = np.array(A10LU[1])
+#print(A10L)
+#print(A10U)
+
+y10c = lin.solve(A10L,b10)
+#print(y10c)
+
+x10c = lin.solve(A10U,y10c)
+#print(x10c)
+
+FE10num = lin.norm(x10c - x10, math.inf)
+FE10den = lin.norm(x10, math.inf)
+FE10 = FE10num/FE10den
+print("Forward Error með LU þáttún:", FE10)
+
+BE10num = lin.norm((A10 @ x10c) - b10, math.inf)
+BE10den = lin.norm(b10, math.inf)
+BE10 = BE10num/BE10den
+print("Backward Error með LU þáttun:", BE10)
+
+ErrMagFac10 = FE10 / BE10
+print("Error Magnification Factor með LU þáttun:", ErrMagFac10)
+
+
+A10 = []
+cp2_3_1(A10,10)
+A10 = np.array(A10)
+#print(A10)
+
+x10 = np.ones(10)
+#print(x10)
+
+b10 = A10 @ x10
+#print(b10)
+
+x10c = lin.solve(A10,b10)
+#print(x10c)
+
+FE10num = lin.norm(x10c - x10, math.inf)
+FE10den = lin.norm(x10, math.inf)
+FE10 = FE10num/FE10den
+print("Forward Error án LU þáttun:", FE10)
+
+BE10num = lin.norm((A10 @ x10c) - b10, math.inf)
+BE10den = lin.norm(b10, math.inf)
+BE10 = BE10num/BE10den
+print("Backward Error án LU þáttun:", BE10)
+
+ErrMagFac10 = FE10 / BE10
+print("Error Magnification Factor án LU þáttun:", ErrMagFac10)
+
+'''
+Útkoma:
+n = 6 gefur eftirfarnadi
+Ástandstala (condition number) með n=6 er: 70342013.93053748
+Forward Error með LU þáttún: 1.587638909228417e-10
+Backward Error með LU þáttun: 0.6666666666666667
+Error Magnification Factor með LU þáttun: 2.381458363842625e-10
+Forward Error án LU þáttun: 4.4538306376296077e-10
+Backward Error án LU þáttun: 1.450087215836939e-16
+Error Magnification Factor án LU þáttun: 3071422.5937500005
+
+n = 10 gefur eftirfarnadi
+Ástandstala (condition number) með n=10 er: 131337064464496.02
+Forward Error með LU þáttún: 0.00032580806187954003
+Backward Error með LU þáttun: 0.6745937551377676
+Error Magnification Factor með LU þáttun: 0.00048296928247283064
+Forward Error án LU þáttun: 0.00026835943707226306
+Backward Error án LU þáttun: 1.2129573866111993e-16
+Error Magnification Factor án LU þáttun: 2212439118096.4287
+'''
+
+
+
+# DrSiggi
+def LUsolP(AA,bb):
+    A=np.array(AA,float)
+    b=np.array(bb,float)
+    eps=0.0
+    n=len(A)
+    p=[]
+    for i in range(n):
+        p+=[i]
+    for j in range(n-1):
+        maxval=abs(A[p[j]][j])
+        maxindex=j
+        for i in range(j+1,n):
+            if abs(A[p[i]][j])>maxval:
+                maxval=abs(A[p[i]][j])
+                maxindex=i
+        p[j],p[maxindex]=p[maxindex],p[j]
+        #print(A[p[j]][j])
+        if abs(A[p[j]][j])<=eps:
+            print('(almost) zero pivot ',A[p[j]][j],)
+            return
+        for i in range(j+1,n):
+            m=-A[p[i]][j]/A[p[j]][j]
+            A[p[i]][j]=-m
+            for k in range(j+1,n):
+                A[p[i]][k]+=m*A[p[j]][k]
+    y=np.zeros(n)
+    for i in range(n):
+        for j in range(i):
+            b[p[i]]-=A[p[i]][j]*y[j]
+        y[i]=b[p[i]]
+    x=np.zeros(n)
+    for i in range(n-1,-1,-1):
+       for j in range(i+1,n):
+           y[i]-=A[p[i]][j]*x[j]
+       x[i]=y[i]/A[p[i]][i]
+    L=np.eye(n,n)
+    U=np.zeros((n,n))
+    P=np.zeros((n,n))
+    for i in range(n):
+        for j in  range(i):
+            L[i][j]=A[p[i]][j]
+        for j in range(i,n):
+            U[i][j]=A[p[i]][j]
+        P[i][p[i]]=1.0
+    return x.reshape((n,1)),p,P,L,U     
+
+
 ##### Dæmi 2
 '''
 Write a script to take a matrix A as input and output L and U.
