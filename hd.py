@@ -2,6 +2,52 @@ import numpy as np
 import math
 import numpy.linalg as lin
 
+######## Dæmablað 5 #########
+''' T.Gr. hd5-1
+Ekki alveg að virka rétt held ég... 
+Best að leysa þetta bara með aðferð úr stæ3 fyrst, ekki að ég muni þær lol
+
+def myI(n):
+    I = []
+    for i in range(n):
+        I.append([])
+        for j in range(n):
+            if i==j:
+                I[i].append(1.0)
+            else:
+                I[i].append(0.0)
+    return I
+
+Leysa u^3 - v^3 + u = 0, u^2+v^2 = 1 
+með x0=[1,1] og A0=B0=I
+með Newton og Broyden I og II
+Hvað þarf margar ítranir með hverri umferð
+til að fá skekkju innan við 10^(-15) ?
+'''
+import numpy as np
+import numpy.linalg as lin
+
+def Broyden2(f,xx0,k):
+    x0 = np.array(xx0)
+    n = len(x0)
+    B = np.eye(n)
+    fx0 = np.array(f(x0))
+    for i in range(k):
+        x=x0-B@fx0
+        d = x-x0
+        delta = np.array(f(x))-fx0
+        Bdelta = B@delta
+        dT = np.transpose(d)
+        B = B + ((d-Bdelta)*dT*B)/(dT*Bdelta)
+        x0 = x
+        print(x0)
+    return x0
+
+myf = lambda x: [x[0]**3 - x[1]**3 + x[0], x[0]**2 + x[1]**2 -1]
+myx0 = [1,1]
+xk = Broyden2(myf,myx0,20)
+
+
 ########## Dæmablað 3 ##########
 ##### Dæmi 3
 '''
