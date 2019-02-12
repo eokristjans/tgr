@@ -2,6 +2,168 @@ import numpy as np
 import math
 import numpy.linalg as lin
 
+##########  Dæmablað 4  ##########
+'''
+#####       Dæmi 1
+Notið eftirfarandi forrit og breytið því til þess að nota Gauss-Seidel og SOR aðferðina
+Notið svo öll þessi forrit til þess að leysa Example 2.24 í bókinni og gangið úr skugga um að þið fáið
+sömu niðurstöðu og bókin
+'''
+# Notkun:   x = matitr(AA,bb,s)
+# Fyrir:    AA er nxn fylki, b er vigur að lengd n, s er jákvæð heiltala
+# Eftir:    x er s ítranir af Jacobi með upphafsvigur np.zeros(n)
+def matitr(AA,bb,s):
+    A=np.array(AA,float)
+    b=np.array(bb,float)
+    (n,m)=np.shape(A)
+    nb=len(b)
+    if n != m or m != nb:
+        print('wrong dimensions')
+        return
+    x_old=np.zeros(n)
+    x_new=np.zeros(n)
+    for j in range(s):
+        for i in range(n):
+            x_new[i]=b[i]
+            for k in range(n):
+                if k != i:
+                    x_new[i] -= A[i,k]*x_old[k]
+            x_new[i] /= A[i,i]
+        for i in range(n):
+            x_old[i]=x_new[i]
+    return x_new
+
+
+'''
+# Notkun:   x = GaussSeidelItr(AA,bb,s)
+# Fyrir:    AA er nxn fylki, b er vigur að lengd n, s er jákvæð heiltala
+# Eftir:    x er s ítranir af Gauss-Seidel með upphafsvigur np.zeros(n)
+'''
+def GaussSeidelItr(AA,bb,s):
+    A=np.array(AA,float)
+    b=np.array(bb,float)
+    (n,m)=np.shape(A)
+    nb=len(b)
+    if n != m or m != nb:
+        print('wrong dimensions')
+        return
+    x_old=np.zeros(n)
+    x_new=np.zeros(n)
+    for j in range(s):
+        for i in range(n):
+            x_new[i]=b[i]
+            for k in range(n):
+                if k != i:
+                    x_new[i] -= A[i,k]*x_new[k]     # Breytti hér í x_new
+            x_new[i] /= A[i,i]
+        for i in range(n):
+            x_old[i]=x_new[i]
+    return x_new
+
+
+
+'''
+Ekki rétt
+'''
+def SORItr(AA,bb,s,omega):  # baetti vid omega innatki
+    A=np.array(AA,float)
+    b=np.array(bb,float)
+    (n,m)=np.shape(A)
+    nb=len(b)
+    if n != m or m != nb:
+        print('wrong dimensions')
+        return
+    x_old=np.zeros(n)
+    x_new=np.zeros(n)
+    for j in range(s):
+        for i in range(n):
+            x_new[i]=omega*b[i]                     # omega margfeldi her?
+            for k in range(n):
+                if k != i:
+                    x_new[i] -= omega*A[i,k]*x_new[k]           # omega margfeldi her?
+#            x_new[i] *= omega                   # Baetti vid omega margfeldinu
+            x_new[i] /= A[i,i]
+        for i in range(n):
+            x_new[i] += ((1-omega)*x_old[i])    # legg vid omega margfeldid
+            x_old[i] =  x_new[i]
+    return x_new
+
+
+
+A=[[3,-1,0,0,0,1/2], [-1,3,-1,0,1/2,0], [0,-1,3,-1,0,0], [0,0,-1,3,-1,0], [ 0,1/2,0,-1,3,-1], [ 1/2,0,0,0,-1,3]]
+b=[5/2,3/2,1,1,3/2,5/2]
+s=6
+omega=1.1
+
+
+# Prentar úttakið eins og í bókinni
+def db4_1(AA,bb,s,omega):
+    jL = matitr(A,b,s)
+    gsL= GaussSeidelItr(A,b,s)
+    sorL = SORItr(A,b,s,omega)
+    n = len(jL)
+    print("Jacobi Gau-Se Sor")
+    for i in range(n):
+        print("%.4f %.4f %.4f" % (jL[i],gsL[i],sorL[i]))
+    
+db4_1(A,b,s,omega)
+
+
+
+''' Haldast óbreyttir
+print(np.array(A))
+print(b)
+print(lin.solve(A,b))   # [1. 1. 1. 1. 1. 1.]
+'''
+
+
+''' Lausn úr bók
+Jacobi Gauss–Seidel SOR
+0.9879 0.9950 0.9989
+0.9846 0.9946 0.9993
+0.9674 0.9969 1.0004
+0.9674 0.9996 1.0009
+0.9846 1.0016 1.0009
+0.9879 1.0013 1.0004
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ########## Dæmablað 3 ##########
 ##### Dæmi 3
 '''
