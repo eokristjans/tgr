@@ -21,6 +21,7 @@ L1      = 2     # skritid ad thessi se ekki notadur, en hann kemur ekki fram i j
 L2 = L3 = np.sqrt(2)
 gamma   = np.pi/2
 p1=p2=p3= np.sqrt(5)
+error = 1e-10   # spyr að þessu í dæmatíma á eftir
 
 
 ''' Suggested Activity 1
@@ -37,13 +38,14 @@ def f(theta):
     bNum    = p3**2-p1**2-A3**2-B3**2
     D       = 2*(A2*B3-B2*A3)
     N1      = B3*aNum-B2*bNum
-    N2      =-A3*aNum+A2*bNum
+    N2      =-A3*aNum+A2*bNum 
     return N1**2+N2**2-p1**2*D**2
     
 theta0 = np.pi/4
-print(f(theta0))     # -4.547473508864641e-13 simeq 0... Eigum vid ad meta ovissu?
-print(f(0))
-print(f(np.pi))
+#print(f(theta0))     # -4.547473508864641e-13 simeq 0... Eigum vid ad meta ovissu?
+#print(f(-theta0))
+#print(f(0))
+#print(f(np.pi))
 
 
 '''
@@ -55,16 +57,16 @@ Maetti teikna thad staerra eda skyrar...
 '''
 t2 = np.arange(-np.pi, np.pi, 0.1)
 
-fig2, ax2 = plt.subplots()
-ax2.plot(t2, f(t2))
+#fig2, ax2 = plt.subplots()
+#ax2.plot(t2, f(t2))
 
-ax2.set(xlabel=r"${\Theta}$ [deg]", 
-        ylabel="$f({\Theta})$",
-        title ='Suggested Activity 2')
-ax2.grid()
+#ax2.set(xlabel=r"${\Theta}$ [deg]", 
+#        ylabel="$f({\Theta})$",
+#        title ='Suggested Activity 2')
+#ax2.grid()
 
-fig2.savefig("sa2.png")
-plt.show()
+#fig2.savefig("sa2.png")
+#plt.show()
 
 
 
@@ -72,57 +74,72 @@ plt.show()
 Suggested Activity 3
 Reproduce Figure 1.15
 '''
+# Latum xL2 := x + L2*cos(theta + gamma)
+#       yL2 := y + L2*sin(theta + gamma)
+#       xL3 := x + L3*cos(theta + gamma)
+#       yL3 := y + L3*sin(theta + gamma)
+
+# Teiknar Stewart Platform
+def plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle="Vantar titil!", plotName="Vantar"):
+        # Teiknar þrihyrning. Byrjum lengst til 
+        # vinstri og forum rettsaelis
+        # Her er (x, y) = (1,2), 
+        #        (xL2, yL2) = (2,3)
+        #        (xL3, yL3) = (2,1)
+        (triangleX, triangleY)  = [x, xL2, xL3, x],[y, yL2, yL3, y]
+        fig, plotObject = plt.subplots()
+        plotObject.plot(triangleX, triangleY, 'b', linewidth=2.5)
+
+        # Baetum vid fyrsta akkerinu
+        # sem hefur hnit fra (0,0) i (x,y)
+        firstAnchorX, firstAnchorY  = [0,x],[0,y]
+        plotObject.plot(firstAnchorX, firstAnchorY, 'b')
+
+        # Baetum vid odru akkerinu
+        # sem hefur hnit fra (x2, y2)
+        # til (xL2, yL2) 
+        secondAnchorX, secondAnchorY  = [x2,xL2],[y2,yL2]
+        plotObject.plot(secondAnchorX, secondAnchorY, 'b')
+
+        # Baetum vid thridja akkerinu
+        # sem hefur hnit fra (xL3, yL3)
+        # til (x1, 0)
+        thirdAnchorX, thirdAnchorY  = [x1,xL3],[0,yL3]
+        plotObject.plot(thirdAnchorX, thirdAnchorY, 'b')
+
+        # Baetum vid punktum fyrir 
+        # akkaeri eitt, tvo og thrju 
+        # sem hafa hnitin
+        # (0,0), (x2, y2) og (x1, 0)
+        anchorPointsX, anchorPointsY  = [0, x1, x2], [0, 0, y2]
+        plotObject.plot(anchorPointsX, anchorPointsY, 'bo')
+
+        # Baetum vid punktum fyrir
+        # hvert horn thrihyrningsins
+        plotObject.plot(triangleX, triangleY, 'bo')
+
+        plotObject.set(xlabel="x", 
+                ylabel="y",
+                title = plotTitle)
+        # plotObject.ylabel.set_rotation('0')     Hef reynt ad snua thessu y
+        # plotObject.grid()
+
+        plotSaveFile = plotName + ".png"
+        fig.savefig(plotSaveFile)
+        plt.show()
 
 ''' Plot (a) '''
-t3a1, t3a2  = [1,2,2,1],[2,3,1,2]
-t3a3, t3a4  = [0, x1, x2], [0, 0, y2]
-t3a5, t3a6  = [0,1],[0,2]
-t3a7, t3a8  = [0,2],[y2,3]
-t3a9, t3a0  = [x1,2],[0,1]
-        
-fig3a, ax3a = plt.subplots()
-ax3a.plot(t3a1, t3a2, 'b', linewidth=2.5)
-ax3a.plot(t3a5, t3a6, 'b')
-ax3a.plot(t3a7, t3a8, 'b')
-ax3a.plot(t3a9, t3a0, 'b')
-ax3a.plot(t3a1, t3a2, 'bo')
-ax3a.plot(t3a3, t3a4, 'bo')
-
-ax3a.set(xlabel="x", 
-        ylabel="y",
-        title ='Suggested Activity 3 (a)')
-# ax3a.ylabel.set_rotation('0')     Hef reynt ad snua thessu y
-# ax3a.grid()
-
-fig3a.savefig("sa3a.png")
-plt.show()
-
+x, y = 1, 2
+xL2, yL2 = 2, 3
+xL3, yL3 = 2, 1
+plotName = "sa3a"
+plotTitle = 'Suggested Activity 3 (a)'
+plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
 
 ''' Plot (b) '''
-t3b1, t3b2  = [1,3,2,1],[2,2,1,2]
-t3b3, t3b4  = [0, x1, x2], [0, 0, y2]
-t3b5, t3b6  = [0,2],[0,1]
-t3b7, t3b8  = [0,1],[y2,2]
-t3b9, t3b0  = [x1,3],[0,2]
-
-
-fig3b, ax3b = plt.subplots()
-ax3b.plot(t3b1, t3b2, 'b', linewidth=2.5)
-ax3b.plot(t3b5, t3b6, 'b')
-ax3b.plot(t3b7, t3b8, 'b')
-ax3b.plot(t3b9, t3b0, 'b')
-ax3b.plot(t3b1, t3b2, 'bo')
-ax3b.plot(t3b3, t3b4, 'bo')
-
-
-ax3b.plot(t3b1, t3b2, 'bo')
-ax3b.plot(t3b3, t3b4, 'bo')
-
-ax3b.set(xlabel="x", 
-        ylabel="y",
-        title ='Suggested Activity 3 (b)')
-# ax3b.ylabel.set_rotation('0')     Hef reynt ad snua thessu y
-# ax3b.grid()
-
-fig3b.savefig("sa3b.png")
-plt.show()
+x, y = 2, 1
+xL2, yL2 = 1, 2
+xL3, yL3 = 3, 2
+plotName = "sa3b"
+plotTitle = 'Suggested Activity 3 (b)'
+plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
