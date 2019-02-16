@@ -195,10 +195,10 @@ for i in range(0,len(thetaCalculated)):
         print("Svo er f(thetaCalculated:", f(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2), "\n")
 
 # Reiknum út x og y fyrir útreiknaðar núllstöðvar f(theta)
-xCalculated = np.zeros(4, dtype=float)
-yCalculated = np.zeros(4, dtype=float)
+xCalc = np.zeros(4, dtype=float)
+yCalc = np.zeros(4, dtype=float)
 
-def xyCalculate(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
+def xyCalc(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
     ### Derived:
     A2      = L3*np.cos(theta)-x1
     B2      = L3*np.sin(theta)
@@ -215,5 +215,23 @@ def xyCalculate(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
     return x,y
 
 for i in range(0, 4): 
-        xCalculated[i], yCalculated[i] = xyCalculate(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
+        xCalc[i], yCalc[i] = xyCalc(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
 
+
+# Útfrá útreiknuðum theta, x og y gildum getum  við síðan reiknað xL2, yL2, xL3, yL3
+xL2Calc = yL2Calc = xL3Calc = yL3Calc = np.zeros(4, dtype=float)
+
+def xyLCalc(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2, x, y): 
+        angle = theta + gamma
+        xL2 = x + L2*np.cos(angle)
+        yL2 = y + L2*np.sin(angle)
+        xL3 = x + L3*np.cos(angle)
+        yL3 = y + L3*np.sin(angle)
+        return xL2,yL2,xL3,yL3
+
+for i in range(0, 4):
+        xL2Calc[i], yL2Calc[i], xL3Calc[i], yL3Calc[i] = xyLCalc(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2, xCalc[i], yCalc[i])
+
+# Teiknum Stewart platform fyrir þessar fjórar núllstöðvar f(theta)
+for i in range(0, 4):
+        plotStewartPlatform(xCalc[i], yCalc[i], x1, x2, y2, xL2Calc[i], yL2Calc[i], xL3Calc[i], yL3Calc[i])
