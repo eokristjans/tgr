@@ -47,7 +47,6 @@ theta0 = np.pi/4
 #print(f(0))
 #print(f(np.pi))
 
-
 '''
 Suggested Activity 2
 Plots f(θ) on [−π,π].
@@ -57,17 +56,14 @@ Maetti teikna thad staerra eda skyrar...
 '''
 t2 = np.arange(-np.pi, np.pi, 0.1)
 
-#fig2, ax2 = plt.subplots()
-#ax2.plot(t2, f(t2))
-
-#ax2.set(xlabel=r"${\Theta}$ [deg]", 
-#        ylabel="$f({\Theta})$",
-#        title ='Suggested Activity 2')
-#ax2.grid()
-
-#fig2.savefig("sa2.png")
-#plt.show()
-
+fig2, ax2 = plt.subplots()
+ax2.plot(t2, f(t2))
+ax2.set(xlabel=r"${\Theta}$ [deg]", 
+        ylabel="$f({\Theta})$",
+        title ='Suggested Activity 2')
+ax2.grid()
+fig2.savefig("sa2.png")
+plt.show()
 
 
 '''
@@ -143,3 +139,17 @@ xL3, yL3 = 3, 2
 plotName = "sa3b"
 plotTitle = 'Suggested Activity 3 (b)'
 plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
+
+'''
+Suggested Activity 4
+Solve the forward kinematics problem for the planar Stewart platform.
+Plot f(theta) and then solve f(theta) = 0
+'''
+# Parameters
+x1 = 5 
+x2, y2 = 0, 6
+L1 = L3 = 3 
+L2 = 3*np.sqrt(2)
+gamma = np.pi/4
+p1 = p2 = 5
+p3 = 3
