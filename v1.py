@@ -11,8 +11,8 @@ Authors:    Erling Oskar Kristjansson   eok4@hi.is
 """
 
 import numpy as np
+import scipy.optimize as scOpt
 import matplotlib.pyplot as plt
-
 
 ''' Vidvaerar breytur fyrir Suggested Activities 1-3 allavega '''
 x1=y2   = 4     # tekid af fig 1.15
@@ -21,14 +21,12 @@ L1      = 2     # skritid ad thessi se ekki notadur, en hann kemur ekki fram i j
 L2 = L3 = np.sqrt(2)
 gamma   = np.pi/2
 p1=p2=p3= np.sqrt(5)
-error = 1e-10   # spyr að þessu í dæmatíma á eftir
-
 
 ''' Suggested Activity 1
 Params L1,L2,L3,γ,x1,x2,y2 are fixed constants,
 strut lengths p1,p2,p3 will be known for a given pose.
 '''
-def f(theta):
+def f(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
     ### Derived:
     A2      = L3*np.cos(theta)-x1
     B2      = L3*np.sin(theta)
@@ -40,8 +38,9 @@ def f(theta):
     N1      = B3*aNum-B2*bNum
     N2      =-A3*aNum+A2*bNum 
     return N1**2+N2**2-p1**2*D**2
-    
-theta0 = np.pi/4
+
+thetaGiven = np.pi/4
+
 #print(f(theta0))     # -4.547473508864641e-13 simeq 0... Eigum vid ad meta ovissu?
 #print(f(-theta0))
 #print(f(0))
@@ -54,17 +53,39 @@ Her sest nokkud merkilegt nefnilega hvad grafid er nalaegt nulli lengi.
 Hefur sannarlega nullpunkta i +/- 0.25*pi eins og lysingin segir.
 Maetti teikna thad staerra eda skyrar...
 '''
-t2 = np.arange(-np.pi, np.pi, 0.1)
 
-fig2, ax2 = plt.subplots()
-ax2.plot(t2, f(t2))
-ax2.set(xlabel=r"${\Theta}$ [deg]", 
-        ylabel="$f({\Theta})$",
-        title ='Suggested Activity 2')
-ax2.grid()
-fig2.savefig("sa2.png")
-plt.show()
+def fPlot(thetaLow, thetaHigh, fileName, graphTitle):
 
+        theRange = np.arange(thetaLow, thetaHigh, 0.1)
+
+        figure, axis = plt.subplots()
+        axis.plot(theRange, f(theRange, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2))
+        axis.set(xlabel=r"${\Theta}$ [radians]", 
+                ylabel="$f({\Theta})$",
+                title = graphTitle)
+        axis.grid()
+        fileString = fileName + ".png"
+        figure.savefig(fileString)
+        plt.xticks(np.arange(thetaLow, thetaHigh, 0.5))
+        plt.show()
+
+fPlot(-np.pi, np.pi, "sa2", 'Suggested Activity 2')
+
+# Skilar núllstöð f. Þarf upphafságiskun sem byggir á
+# því að skoða graf af f(theta) 
+def fSolver(f, thetaGuess): 
+        func = lambda theta : f(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
+        # Aðferðin sem fsolve notar til að finna núllstöð: 
+        # https://www.math.utah.edu/software/minpack/minpack/hybrd.html
+        thetaSolution = scOpt.fsolve(func, thetaGuess)
+        return thetaSolution
+
+# Skoðum graf af f(theta) og sjáum þá fyrir hvaða gildi
+# á theta, f(theta) er nálægt núlli
+thetaCalculated = fSolver(f, np.pi/5)
+
+print("Núllstöð f(theta) sem fékkst með ítrun er:", thetaCalculated)
+print("Gefin núllstöð f(theta) er:", thetaGiven)
 
 '''
 Suggested Activity 3
@@ -145,7 +166,7 @@ Suggested Activity 4
 Solve the forward kinematics problem for the planar Stewart platform.
 Plot f(theta) and then solve f(theta) = 0
 '''
-# Parameters
+# Stikar
 x1 = 5 
 x2, y2 = 0, 6
 L1 = L3 = 3 
@@ -153,3 +174,46 @@ L2 = 3*np.sqrt(2)
 gamma = np.pi/4
 p1 = p2 = 5
 p3 = 3
+
+# Teiknum f(theta) fyrir theta frá -pi upp í pi
+fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 4')
+
+# Finnum núna fjórar núllstöðvar f(theta)
+thetaCalculated = np.zeros(4, dtype=float)
+
+# Útfrá mynd sést að ágætis upphafsgisk fyrir
+# þessar fjórar núllstöðvar f(theta) eru
+# -0.7, -0.6, 1.1, 2.1
+thetaGuesses = [-0.7, -0.3, 1.1, 2.1]
+
+# Hér fáum við út réttar núllstöðvar
+print("Ef thetaCalculated er raunveruleg núllstöð þá ætti")
+print("f(thetaCalculated að vera mjög nálægt núlli \n")
+for i in range(0,len(thetaCalculated)):
+        thetaCalculated[i] = fSolver(f, thetaGuesses[i])
+        print("Nú fæst að thetaCalculated er:", thetaCalculated[i])
+        print("Svo er f(thetaCalculated:", f(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2), "\n")
+
+# Reiknum út x og y fyrir útreiknaðar núllstöðvar f(theta)
+xCalculated = np.zeros(4, dtype=float)
+yCalculated = np.zeros(4, dtype=float)
+
+def xyCalculate(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
+    ### Derived:
+    A2      = L3*np.cos(theta)-x1
+    B2      = L3*np.sin(theta)
+    A3      = L2*np.cos(theta+gamma)-x2
+    B3      = L2*np.sin(theta+gamma)-y2
+    aNum    = p2**2-p1**2-A2**2-B2**2
+    bNum    = p3**2-p1**2-A3**2-B3**2
+    D       = 2*(A2*B3-B2*A3)
+    N1      = B3*aNum-B2*bNum
+    N2      =-A3*aNum+A2*bNum 
+    
+    x = N1/D
+    y = N2/D
+    return x,y
+
+for i in range(0, 4): 
+        xCalculated[i], yCalculated[i] = xyCalculate(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
+
