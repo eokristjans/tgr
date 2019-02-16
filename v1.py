@@ -11,6 +11,7 @@ Authors:    Erling Oskar Kristjansson   eok4@hi.is
 """
 
 import numpy as np
+import math
 import scipy.optimize as scOpt
 import matplotlib.pyplot as plt
 
@@ -195,10 +196,10 @@ for i in range(0,len(thetaCalculated)):
         print("Svo er f(thetaCalculated:", f(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2), "\n")
 
 # Reiknum út x og y fyrir útreiknaðar núllstöðvar f(theta)
-xCalculated = np.zeros(4, dtype=float)
-yCalculated = np.zeros(4, dtype=float)
+xCalc = np.zeros(4, dtype=float)
+yCalc = np.zeros(4, dtype=float)
 
-def xyCalculate(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
+def xyCalc(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
     ### Derived:
     A2      = L3*np.cos(theta)-x1
     B2      = L3*np.sin(theta)
@@ -215,5 +216,28 @@ def xyCalculate(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2):
     return x,y
 
 for i in range(0, 4): 
-        xCalculated[i], yCalculated[i] = xyCalculate(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
+        xCalc[i], yCalc[i] = xyCalc(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
 
+# Útfrá útreiknuðum theta, x og y gildum getum  við síðan reiknað xL2, yL2, xL3, yL3
+xL2Calc = yL2Calc = xL3Calc = yL3Calc = np.zeros(4, dtype=float)
+
+def xyLCalc(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2, x, y): 
+        xL2 = x + L2*np.cos(theta + gamma)
+        yL2 = y + L2*np.sin(theta + gamma)
+        xL3 = x + L3*np.cos(theta)
+        yL3 = y + L3*np.sin(theta)
+        return xL2,yL2,xL3,yL3
+
+for i in range(0, 4):
+        xL2Calc[i], yL2Calc[i], xL3Calc[i], yL3Calc[i] = xyLCalc(thetaCalculated[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2, xCalc[i], yCalc[i])
+
+# Teiknum Stewart platform fyrir þessar fjórar núllstöðvar f(theta)
+# og könnum í leiðinni hvort lengdirnar á struts séu p1, p2 og p3
+for i in range(0, 4):
+        p1Calc = math.hypot(x - 0, y - 0)
+        p2Calc = math.hypot(xL3 - x1, yL3 - 0)
+        p3Calc = math.hypot(xL2 - x2, yL2 - y2)
+        print("Nú er p1 = 5 en útreiknað gildi er:", p1Calc)
+        print("Nú er p2 = 5 en útreiknað gildi er:", p2Calc)
+        print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc)
+        plotStewartPlatform(xCalc[i], yCalc[i], x1, x2, y2, xL2Calc[i], yL2Calc[i], xL3Calc[i], yL3Calc[i])
