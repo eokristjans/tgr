@@ -74,16 +74,18 @@ def fPlot(thetaL, thetaH, fileName, graphTitle):
         axis.set(xlabel=r"${\Theta}$ [radians]", 
                 ylabel="$f({\Theta})$",
                 title = graphTitle)
+        axis.set_ylim([-50000,50000])
         axis.grid()
         # Vistum myndina
         fileString = fileName + ".png"
         figure.savefig(fileString)
         # Setjum minnsta sýnilega bilið á x - ásnum
         plt.xticks(np.arange(thetaL, thetaH, 0.5))
+        plt.yticks(np.arange(-50000,50000,5000))
         plt.show()
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
-fPlot(-np.pi, np.pi, "sa2", 'Suggested Activity 2')
+# fPlot(-np.pi, np.pi, "sa2", 'Suggested Activity 2')
 
 # Finnum núllstöðvar f(theta) með útreikningi
 # Þær ættu að vera theta = pi/4 og theta = -pi/4
@@ -173,7 +175,7 @@ xL2, yL2 = 2, 3
 xL3, yL3 = 2, 1
 plotName = "sa3a"
 plotTitle = 'Suggested Activity 3 (a)'
-plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
+# plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
 
 ''' Plot (b) '''
 x, y = 2, 1
@@ -181,7 +183,7 @@ xL2, yL2 = 1, 2
 xL3, yL3 = 3, 2
 plotName = "sa3b"
 plotTitle = 'Suggested Activity 3 (b)'
-plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
+# plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
 
 '''
 Suggested Activity 4
@@ -199,7 +201,7 @@ p1 = p2 = 5
 p3 = 3
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
-fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 4')
+# fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 4')
 
 # Finnum núna fjórar núllstöðvar f(theta)
 thetas = np.zeros(4, dtype=float)
@@ -267,19 +269,20 @@ for i in range(0, 4):
         print("Nú er p2 = 5 en útreiknað gildi er:", p2Calc)
         print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc)
         print("\n")
-        plotStewartPlatform(xy[i,0], xy[i,1], x1, x2, y2, xyL23[i, 0], xyL23[i, 1], xyL23[i, 2], xyL23[i, 3], "Suggested Activity 4", "sa4")
+        # plotStewartPlatform(xy[i,0], xy[i,1], x1, x2, y2, xyL23[i, 0], xyL23[i, 1], xyL23[i, 2], xyL23[i, 3], "Suggested Activity 4", "sa4")
 
 '''
 Suggested Activity 5
 Change strut length to p2 = 7 and re-solve the problem. 
 For these parameters, there are six poses
 '''
+
 print("Suggested Activity 4 \n")
 # Change the value of p2
 p2 = 7
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
-fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 5')
+# fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 5')
 
 # Finnum núna sex núllstöðvar f(theta)
 # Hér er ferillinn mjög flatur í kringum fimm
@@ -326,4 +329,32 @@ for i in range(0, 4):
         print("Nú er p2 = 7 en útreiknað gildi er:", p2Calc2)
         print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc2)
         print("\n")
-        plotStewartPlatform(xy2[i,0], xy2[i,1], x1, x2, y2, xy2L23[i, 0], xy2L23[i, 1], xy2L23[i, 2], xy2L23[i, 3], "Suggested Activity 5", "sa5")
+        # plotStewartPlatform(xy2[i,0], xy2[i,1], x1, x2, y2, xy2L23[i, 0], xy2L23[i, 1], xy2L23[i, 2], xy2L23[i, 3], "Suggested Activity 5", "sa5")
+
+'''
+Suggested Activity 6
+Find a strut length p2, with the rest of the parameters as in Step 4, 
+for which there are only two poses.
+'''
+# Stikar úr Suggested Activity 4
+x1 = 5 
+x2, y2 = 0, 6
+L1 = L3 = 3 
+L2 = 3*np.sqrt(2)
+gamma = np.pi/4
+p1 = 5
+p3 = 3
+
+# Prófum mismunandi gildi á p2
+p2Array = np.arange(0, 15, 0.5)
+
+# Teiknum f(theta) fyrir theta frá -pi upp í pi
+# fyrir gefið gildi á p2
+for i in range(0, len(p2Array)): 
+        p2 = p2Array[i]
+        title = 'Suggested Activity 6, p2 =' + str(p2)
+        saveName = 'sa6' + str(p2)
+        fPlot(-np.pi, np.pi, saveName, title)
+
+# Við sjáum að þegar p2 = 4 þá hefur f(theta) aðeins
+# tvær núllstöðvar og því aðeins tvær stöður
