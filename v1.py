@@ -346,7 +346,7 @@ p1 = 5
 p3 = 3
 
 # Prófum mismunandi gildi á p2
-p2Array = np.arange(0, 15, 0.5)
+p2Array = np.arange(0, 40, 0.5)
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
 # fyrir gefið gildi á p2
@@ -358,3 +358,26 @@ for i in range(0, len(p2Array)):
 
 # Við sjáum að þegar p2 = 4 þá hefur f(theta) aðeins
 # tvær núllstöðvar og því aðeins tvær stöður
+
+'''
+Suggested Activity 7
+Calculate the intervals in p2, with the rest of the parameters
+as in Step 4, for which there are 0, 2, 4 and 6 poses,
+respectively 
+'''
+# Hér voru skoðuð gildi á p frá 0 upp í 30
+
+# Fyrir p2 = 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 9.5, 10.0, 10.5, 11.0, 11.5  eru núll lausnir
+# Fyrir p2 = 4.0, 4.5, 8.0, 8.5, 9.0 eru tvær lausnir
+# Fyrir p2 = 5.0, 5.5., 6.0, 6.5, 7.5 eru fjórar lausnir 
+# Fyrir p2 = 7.0 eru sex lausnir
+
+# Gefið: f(theta) hefur í mesta lagi 6 rætur á bilinu sem við takmörkum
+# okkur við, þ.e. [-pi, pi]
+# Vitum að p2 >= 0 en vitum ekki hvert hámarkið er.
+# Eigum við að skoða p2 upp í ~ infinity?
+# Þurfum að telja núllstöðvar. Með hve litlu millibili? p2 = 1.1 og svo p2 1.11?
+
+# Finnum núllstöðvar með upphafsgiski og svo ítrun. Ef við prófum theta = 0.1 og svo
+# theta 0.1000001 þá eigum við hættu á að lenda á sömu núllstöðinni. Það væri hægt að
+# halda utan um síðustu núllstöð.
