@@ -169,7 +169,7 @@ def plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle="Vantar 
         fig.savefig(plotSaveFile)
         plt.show()
 
-''' Plot (a) '''
+''' Plot SA3(a) '''
 x, y = 1, 2
 xL2, yL2 = 2, 3
 xL3, yL3 = 2, 1
@@ -177,7 +177,7 @@ plotName = "sa3a"
 plotTitle = 'Suggested Activity 3 (a)'
 # plotStewartPlatform(x, y, x1, x2, y2, xL2, yL2, xL3, yL3, plotTitle, plotName)
 
-''' Plot (b) '''
+''' Plot SA3(b) '''
 x, y = 2, 1
 xL2, yL2 = 1, 2
 xL3, yL3 = 3, 2
@@ -201,7 +201,7 @@ p1 = p2 = 5
 p3 = 3
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
-# fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 4')
+fPlot(-np.pi, np.pi, "sa4-0", 'Suggested Activity 4')
 
 # Finnum núna fjórar núllstöðvar f(theta)
 thetas = np.zeros(4, dtype=float)
@@ -214,7 +214,7 @@ thetasGuess = [-0.7, -0.3, 1.1, 2.1]
 # Hér fáum við út réttar núllstöðvar
 print("Ef theta er raunveruleg núllstöð þá ætti")
 print("f(theta) að vera mjög nálægt núlli \n")
-for i in range(0,len(thetas)):
+for i in range(len(thetas)):
         thetas[i] = fSolver(f, thetasGuess[i])
         print("Nú fæst að theta er:", thetas[i])
         print("Svo er f(theta):", f(thetas[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2), "\n")
@@ -256,10 +256,6 @@ for i in range(0, 4):
 
 # Teiknum Stewart platform fyrir þessar fjórar núllstöðvar f(theta)
 # og könnum í leiðinni hvort lengdirnar á struts séu p1, p2 og p3
-
-# Fáum röng gildi á p3Calc fyrir fyrstu 2 núllstöðvarnar en þar er
-# f(theta) mun flatari ferill en fyrir þær seinni 2. Villumögnun
-# gæti því verið að valda þessu
 for i in range(0, 4):
         p1Calc = math.hypot(xy[i,0] - 0, xy[i,1] - 0)
         p2Calc = math.hypot(xyL23[i,2] - x1, xyL23[i,3] - 0)
@@ -269,7 +265,8 @@ for i in range(0, 4):
         print("Nú er p2 = 5 en útreiknað gildi er:", p2Calc)
         print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc)
         print("\n")
-        # plotStewartPlatform(xy[i,0], xy[i,1], x1, x2, y2, xyL23[i, 0], xyL23[i, 1], xyL23[i, 2], xyL23[i, 3], "Suggested Activity 4", "sa4")
+        pName = "sa4-" + str(i+1)
+        plotStewartPlatform(xy[i,0], xy[i,1], x1, x2, y2, xyL23[i, 0], xyL23[i, 1], xyL23[i, 2], xyL23[i, 3], "Suggested Activity 4", pName)
 
 '''
 Suggested Activity 5
@@ -282,7 +279,7 @@ print("Suggested Activity 4 \n")
 p2 = 7
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
-# fPlot(-np.pi, np.pi, "sa4", 'Suggested Activity 5')
+fPlot(-np.pi, np.pi, "sa5-0", 'Suggested Activity 5')
 
 # Finnum núna sex núllstöðvar f(theta)
 # Hér er ferillinn mjög flatur í kringum fimm
@@ -303,24 +300,20 @@ for i in range(0,len(thetas2)):
         print("Svo er f(theta):", f(thetas2[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2), "\n")
 
 # Geymir x og y gildin fyrir útreiknaðar núllstöðvar f(theta)
-xy2 = np.zeros([4,2], dtype=float)
+xy2 = np.zeros([6,2], dtype=float)
 
-for i in range(0, 4): 
+for i in range(0, 6): 
         xy2[i] = xyCalc(thetas2[i], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
 
 # Útfrá útreiknuðum theta, x og y gildum getum við síðan reiknað xL2, yL2, xL3, yL3
-xy2L23 = np.zeros([4,4], dtype=float)
+xy2L23 = np.zeros([6,4], dtype=float)
 
-for i in range(0, 4):
+for i in range(0, 6):
         xy2L23[i] = xyLCalc(thetas2[i], xy2[i,0], xy2[i,1], p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
 
-# Teiknum Stewart platform fyrir þessar fjórar núllstöðvar f(theta)
+# Teiknum Stewart platform fyrir þessar sex núllstöðvar f(theta)
 # og könnum í leiðinni hvort lengdirnar á struts séu p1, p2 og p3
-
-# Fáum röng gildi á p3Calc fyrir fyrstu 2 núllstöðvarnar en þar er
-# f(theta) mun flatari ferill en fyrir þær seinni 2. Villumögnun
-# gæti því verið að valda þessu
-for i in range(0, 4):
+for i in range(0, 6):
         p1Calc2 = math.hypot(xy2[i,0] - 0, xy2[i,1] - 0)
         p2Calc2 = math.hypot(xy2L23[i,2] - x1, xy2L23[i,3] - 0)
         p3Calc2 = math.hypot(xy2L23[i,0] - x2, xy2L23[i,1] - y2)
@@ -329,7 +322,8 @@ for i in range(0, 4):
         print("Nú er p2 = 7 en útreiknað gildi er:", p2Calc2)
         print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc2)
         print("\n")
-        # plotStewartPlatform(xy2[i,0], xy2[i,1], x1, x2, y2, xy2L23[i, 0], xy2L23[i, 1], xy2L23[i, 2], xy2L23[i, 3], "Suggested Activity 5", "sa5")
+        pName = "sa5-"+str(i+1)
+        plotStewartPlatform(xy2[i,0], xy2[i,1], x1, x2, y2, xy2L23[i, 0], xy2L23[i, 1], xy2L23[i, 2], xy2L23[i, 3], "Suggested Activity 5", pName)
 
 '''
 Suggested Activity 6
@@ -345,6 +339,52 @@ gamma = np.pi/4
 p1 = 5
 p3 = 3
 
+# Höfum séð að það eru 4 rætur og þar með 4 stöður þegar p2 = 5
+# Höfum séð að það eru 6 rætur og þar með 6 stöður þegar p2 = 7
+# Skoðum gildi þar í kring
+# Vitum að það eru (líklegast) formerkjaskipti í rótum
+#   svo leitum að formerkjaskiptum á bilinu [0,12]
+def fSolve2():
+        # Setjum bilið á theta sem við viljum
+        # teikna f(theta) fyrir
+        formerkjaskipti = 0
+        curr = f(-np.pi, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
+        next = 0 
+        for i in range(-np.pi,np.pi,0.05):
+            if 
+        
+        axis.plot(theRange, f(theRange, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2))
+
+# Prófum mismunandi gildi á p2
+p2Array = np.arange(0, 12, 0.5)
+
+# Teiknum f(theta) fyrir theta frá -pi upp í pi
+# fyrir gefið gildi á p2
+for i in range(0, len(p2Array)): 
+        p2 = p2Array[i]
+        try:
+            print(fSolver(f,[-1,1]))
+            print(p2, " gefur nullstodvar")
+        except:
+            print(p2, "ekki nullstod")
+        
+        
+    '''
+        theRange = np.arange(thetaL, thetaH, 0.1)
+        f(theRange, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
+        title = 'Suggested Activity 6, p2 =' + str(p2)
+        saveName = 'sa6' + str(p2)
+        fPlot(-np.pi, np.pi, saveName, title)
+'''
+
+
+
+
+
+''' 
+Eftirfarandi er engin leið til að leysa þetta finnst mér.
+Ágiskun og skoða myndir? haha 
+'''
 # Prófum mismunandi gildi á p2
 p2Array = np.arange(0, 40, 0.5)
 
