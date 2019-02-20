@@ -1,8 +1,55 @@
 import numpy as np 
 import math
 import numpy.linalg as lin
+import matplotlib.pyplot as plt
 
-=======
+
+''''''''''''''''''''''''''''''''' Dæmablað 6 '''''''''''''''''''''''''''''''''
+from fractions import Fraction
+
+chebyshev_bruunarpunktar = lambda j,n: np.cos((np.pi*(2*j-1))/(2*n))
+
+d2a = []
+for i in range(1,7):
+    d2a.append(chebyshev_bruunarpunktar(i,6))
+
+
+np.cos((np.pi*(2-1))/(12))
+
+4**4/2**7
+
+def helmadf(f,a,b,TOL):
+    fa=f(a)
+    fb=f(b)
+    while (b-a)/2 > TOL:
+        c=(a+b)/2
+        fc=f(c)
+#        print(fc)
+        if fa*fc <= 0:
+            b=c
+            fb=fc
+        else:
+            a=c
+            fa=fc
+    return c,fc
+    
+TOL = 0.5e-6
+
+f = lambda x: 32*x**6 - 48*x**4 + 18*x**2 - 1
+t2 = np.arange(-0.8, 1, 0.1)
+fig2, ax2 = plt.subplots()
+ax2.plot(t2, f(t2))
+
+ax2.grid()
+plt.show()
+
+d2a1 = helmadf(f,-9000,-7500,TOL)
+d2a2 = helmadf(f,-7000,-6500,TOL)
+d2a1 = helmadf(f,-9000,-7500,TOL)
+
+f(0.9659258)
+
+
 ######## Dæmablað 5 #########
 ''' T.Gr. hd5-1
 Ekki alveg að virka rétt held ég... 
