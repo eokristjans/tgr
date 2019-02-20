@@ -350,11 +350,11 @@ p2Array = np.arange(0, 40, 0.5)
 
 # Teiknum f(theta) fyrir theta frá -pi upp í pi
 # fyrir gefið gildi á p2
-for i in range(0, len(p2Array)): 
-        p2 = p2Array[i]
-        title = 'Suggested Activity 6, p2 =' + str(p2)
-        saveName = 'sa6' + str(p2)
-        fPlot(-np.pi, np.pi, saveName, title)
+#for i in range(0, len(p2Array)): 
+#        p2 = p2Array[i]
+#        title = 'Suggested Activity 6, p2 =' + str(p2)
+#        saveName = 'sa6' + str(p2)
+#        fPlot(-np.pi, np.pi, saveName, title)
 
 # Við sjáum að þegar p2 = 4 þá hefur f(theta) aðeins
 # tvær núllstöðvar og því aðeins tvær stöður
@@ -367,6 +367,61 @@ respectively
 '''
 # Hér voru skoðuð gildi á p frá 0 upp í 30
 
+# Stikar úr Suggested Activity 4
+x1 = 5 
+x2, y2 = 0, 6
+L1 = L3 = 3 
+L2 = 3*np.sqrt(2)
+gamma = np.pi/4
+p1 = 5
+p3 = 3
+
+# Fall sem telur fjölda róta fallsins f(theta)
+# fyrir gefna stika
+def countRoots(f, p2): 
+        deltaTheta = 0.001
+        thetaOld = -np.pi
+        oldSign = f(thetaOld, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2) > 0
+        count = 0
+        for theta in range(-np.pi, np.pi, deltaTheta):
+                thetaNew = theta
+                newSign = f(thetaNew, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2) > 0
+                if(newSign != oldSign):
+                        count += 1
+                oldSign = newSign
+        return count
+
+no = 100
+noSolutions = np.zeros(no)
+print(noSolutions)
+for p2 in range(0, no, 1):
+        i = int(p2)
+        noSolutions[i] = countRoots(f, i)
+
+theRange = np.arange(0, no, 1)
+
+figure, axis = plt.subplots()
+
+# Teiknum grafið
+axis.plot(theRange, noSolutions[theRange])
+
+# Setjum titil á grafið og ásana
+axis.set(xlabel=r"${p_2}$", 
+                ylabel="Fjöldi staða (núllstöðva)",
+                title = "")
+axis.set_ylim([0,10])
+axis.grid()
+
+# Setjum minnsta sýnilega bilið á x - ásnum
+plt.xticks(np.arange(0, 100, 1))
+plt.yticks(np.arange(0, 10, 1))
+# Vistum myndina
+# fileString = fileName + ".png"
+# figure.savefig(fileString)
+plt.show()
+
+
+
 # Fyrir p2 = 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 9.5, 10.0, 10.5, 11.0, 11.5  eru núll lausnir
 # Fyrir p2 = 4.0, 4.5, 8.0, 8.5, 9.0 eru tvær lausnir
 # Fyrir p2 = 5.0, 5.5., 6.0, 6.5, 7.5 eru fjórar lausnir 
@@ -377,7 +432,3 @@ respectively
 # Vitum að p2 >= 0 en vitum ekki hvert hámarkið er.
 # Eigum við að skoða p2 upp í ~ infinity?
 # Þurfum að telja núllstöðvar. Með hve litlu millibili? p2 = 1.1 og svo p2 1.11?
-
-# Finnum núllstöðvar með upphafsgiski og svo ítrun. Ef við prófum theta = 0.1 og svo
-# theta 0.1000001 þá eigum við hættu á að lenda á sömu núllstöðinni. Það væri hægt að
-# halda utan um síðustu núllstöð.
