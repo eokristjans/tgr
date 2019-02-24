@@ -324,11 +324,11 @@ for i in range(0, 4):
         p1Calc2 = math.hypot(xy2[i,0] - 0, xy2[i,1] - 0)
         p2Calc2 = math.hypot(xy2L23[i,2] - x1, xy2L23[i,3] - 0)
         p3Calc2 = math.hypot(xy2L23[i,0] - x2, xy2L23[i,1] - y2)
-        print("Fyrir núllstöðina", thetas2[i], "þá fást eftirfarandi niðurstöður")
-        print("Nú er p1 = 5 en útreiknað gildi er:", p1Calc2)
-        print("Nú er p2 = 7 en útreiknað gildi er:", p2Calc2)
-        print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc2)
-        print("\n")
+        # print("Fyrir núllstöðina", thetas2[i], "þá fást eftirfarandi niðurstöður")
+        # print("Nú er p1 = 5 en útreiknað gildi er:", p1Calc2)
+        # print("Nú er p2 = 7 en útreiknað gildi er:", p2Calc2)
+        # print("Nú er p3 = 3 en útreiknað gildi er:", p3Calc2)
+        # print("\n")
         # plotStewartPlatform(xy2[i,0], xy2[i,1], x1, x2, y2, xy2L23[i, 0], xy2L23[i, 1], xy2L23[i, 2], xy2L23[i, 3], "Suggested Activity 5", "sa5")
 
 '''
@@ -383,7 +383,7 @@ def countRoots(f, p2):
         thetaOld = -np.pi
         oldSign = f(thetaOld, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2) > 0
         count = 0
-        for theta in range(-np.pi, np.pi, deltaTheta):
+        for theta in np.arange(-np.pi, np.pi+deltaTheta, deltaTheta):
                 thetaNew = theta
                 newSign = f(thetaNew, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2) > 0
                 if(newSign != oldSign):
@@ -416,19 +416,6 @@ axis.grid()
 plt.xticks(np.arange(0, 100, 1))
 plt.yticks(np.arange(0, 10, 1))
 # Vistum myndina
-# fileString = fileName + ".png"
-# figure.savefig(fileString)
+fileString = "sa7" + ".png"
+figure.savefig(fileString)
 plt.show()
-
-
-
-# Fyrir p2 = 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 9.5, 10.0, 10.5, 11.0, 11.5  eru núll lausnir
-# Fyrir p2 = 4.0, 4.5, 8.0, 8.5, 9.0 eru tvær lausnir
-# Fyrir p2 = 5.0, 5.5., 6.0, 6.5, 7.5 eru fjórar lausnir 
-# Fyrir p2 = 7.0 eru sex lausnir
-
-# Gefið: f(theta) hefur í mesta lagi 6 rætur á bilinu sem við takmörkum
-# okkur við, þ.e. [-pi, pi]
-# Vitum að p2 >= 0 en vitum ekki hvert hámarkið er.
-# Eigum við að skoða p2 upp í ~ infinity?
-# Þurfum að telja núllstöðvar. Með hve litlu millibili? p2 = 1.1 og svo p2 1.11?
