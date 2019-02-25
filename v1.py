@@ -385,14 +385,18 @@ gamma = np.pi/4
 p1 = 5
 p3 = 3
 
-no = 20
-noSolutions = np.zeros(no)
+no = 100
+noSolutions = []
 print(noSolutions)
-for p2 in range(0, no, 1):
-        i = int(p2)
-        noSolutions[i] = countRoots(f, i)
+i = 0.0
+for p2 in range(no):
+    noRoots = countRoots(f, i)
+    noSolutions.append(countRoots(f, i))
+    i+=0.2
 
-theRange = np.arange(0, no, 1)
+noSolutions = np.array(noSolutions)
+
+theRange = np.arange(0, 100, 1)
 
 figure, axis = plt.subplots()
 
@@ -407,7 +411,7 @@ axis.set_ylim([0,6])
 axis.grid()
 
 # Setjum minnsta sýnilega bilið á x - ásnum
-plt.xticks(np.arange(0, 100, 1))
+plt.xticks(np.arange(0, 100, 5))
 plt.yticks(np.arange(0, 6, 1))
 # Vistum myndina
 fileString = "sa7" + ".png"
