@@ -361,13 +361,17 @@ def countRoots(f, p2):
 #   svo leitum að formerkjaskiptum á bilinu [0,12]
 
 # Prófum mismunandi gildi á p2
-p2Array = np.arange(0, 12.5, 0.5)
-p2Roots = list()
-for i in range(len(p2Array)):
-        if(countRoots(f, i) == 2):
-                p2Roots.append(i)
-print(p2Roots)
+def p2Roots(p2Min, p2Max, interval, noRoots): 
+  p2Array = np.arange(p2Min, p2Max+interval, interval)
+  p2Roots = list()
+  for i in p2Array:
+          if(countRoots(f, i) == noRoots):
+                  p2Roots.append(i)
 
+  for i in range(len(p2Roots)):
+    print(p2Roots[i])
+
+p2Roots(0, 12, 0.1, 2)
 '''
 Suggested Activity 7
 Calculate the intervals in p2, with the rest of the parameters
@@ -385,23 +389,22 @@ gamma = np.pi/4
 p1 = 5
 p3 = 3
 
-no = 100
-noSolutions = []
-print(noSolutions)
-i = 0.0
-for p2 in range(no):
-    noRoots = countRoots(f, i)
-    noSolutions.append(countRoots(f, i))
-    i+=0.2
+maxVal = 100
+interval = 0.1
+no = int(maxVal/interval)
+noSolutions = np.zeros(no)
+p2 = 0
+for i in range(len(noSolutions)):
+  noSolutions[i] = countRoots(f, p2)
+  p2 += interval
 
-noSolutions = np.array(noSolutions)
+theRange = np.arange(0, maxVal, interval)
+matrixRange = np.arange(0, len(noSolutions), 1)
 
-theRange = np.arange(0, 100, 1)
-
-figure, axis = plt.subplots()
+figure, axis = plt.subplots(figsize=(15, 6))
 
 # Teiknum grafið
-axis.plot(theRange, noSolutions[theRange])
+axis.scatter(theRange, noSolutions[matrixRange])
 
 # Setjum titil á grafið og ásana
 axis.set(xlabel=r"${p_2}$", 
@@ -411,9 +414,10 @@ axis.set_ylim([0,6])
 axis.grid()
 
 # Setjum minnsta sýnilega bilið á x - ásnum
-plt.xticks(np.arange(0, 100, 5))
-plt.yticks(np.arange(0, 6, 1))
+plt.xticks(np.arange(0, maxVal+1, 10))
+plt.yticks(np.arange(0, 8, 1))
 # Vistum myndina
 fileString = "sa7" + ".png"
 figure.savefig(fileString)
+plt.grid(True)
 plt.show()
