@@ -385,7 +385,7 @@ gamma = np.pi/4
 p1 = 5
 p3 = 3
 
-no = 100
+no = 20
 noSolutions = np.zeros(no)
 print(noSolutions)
 for p2 in range(0, no, 1):
@@ -403,12 +403,12 @@ axis.plot(theRange, noSolutions[theRange])
 axis.set(xlabel=r"${p_2}$", 
                 ylabel="Fjöldi staða (núllstöðva)",
                 title = "")
-axis.set_ylim([0,10])
+axis.set_ylim([0,6])
 axis.grid()
 
 # Setjum minnsta sýnilega bilið á x - ásnum
 plt.xticks(np.arange(0, 100, 1))
-plt.yticks(np.arange(0, 10, 1))
+plt.yticks(np.arange(0, 6, 1))
 # Vistum myndina
 fileString = "sa7" + ".png"
 figure.savefig(fileString)
