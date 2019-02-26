@@ -339,65 +339,34 @@ gamma = np.pi/4
 p1 = 5
 p3 = 3
 
+# Fall sem telur fjölda róta fallsins f(theta)
+# fyrir gefna stika
+def countRoots(f, p2): 
+        deltaTheta = 0.001
+        thetaOld = -np.pi
+        oldSign = f(thetaOld, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2) > 0
+        count = 0
+        for theta in np.arange(-np.pi, np.pi+deltaTheta, deltaTheta):
+                thetaNew = theta
+                newSign = f(thetaNew, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2) > 0
+                if(newSign != oldSign):
+                        count += 1
+                oldSign = newSign
+        return count
+
 # Höfum séð að það eru 4 rætur og þar með 4 stöður þegar p2 = 5
 # Höfum séð að það eru 6 rætur og þar með 6 stöður þegar p2 = 7
 # Skoðum gildi þar í kring
 # Vitum að það eru (líklegast) formerkjaskipti í rótum
 #   svo leitum að formerkjaskiptum á bilinu [0,12]
-def fSolve2():
-        # Setjum bilið á theta sem við viljum
-        # teikna f(theta) fyrir
-        formerkjaskipti = 0
-        curr = f(-np.pi, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
-        next = 0 
-        for i in range(-np.pi,np.pi,0.05):
-            if 
-        
-        axis.plot(theRange, f(theRange, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2))
 
 # Prófum mismunandi gildi á p2
-p2Array = np.arange(0, 12, 0.5)
-
-# Teiknum f(theta) fyrir theta frá -pi upp í pi
-# fyrir gefið gildi á p2
-for i in range(0, len(p2Array)): 
-        p2 = p2Array[i]
-        try:
-            print(fSolver(f,[-1,1]))
-            print(p2, " gefur nullstodvar")
-        except:
-            print(p2, "ekki nullstod")
-        
-        
-    '''
-        theRange = np.arange(thetaL, thetaH, 0.1)
-        f(theRange, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)
-        title = 'Suggested Activity 6, p2 =' + str(p2)
-        saveName = 'sa6' + str(p2)
-        fPlot(-np.pi, np.pi, saveName, title)
-'''
-
-
-
-
-
-''' 
-Eftirfarandi er engin leið til að leysa þetta finnst mér.
-Ágiskun og skoða myndir? haha 
-'''
-# Prófum mismunandi gildi á p2
-p2Array = np.arange(0, 40, 0.5)
-
-# Teiknum f(theta) fyrir theta frá -pi upp í pi
-# fyrir gefið gildi á p2
-for i in range(0, len(p2Array)): 
-        p2 = p2Array[i]
-        title = 'Suggested Activity 6, p2 =' + str(p2)
-        saveName = 'sa6' + str(p2)
-        fPlot(-np.pi, np.pi, saveName, title)
-
-# Við sjáum að þegar p2 = 4 þá hefur f(theta) aðeins
-# tvær núllstöðvar og því aðeins tvær stöður
+p2Array = np.arange(0, 12.5, 0.5)
+p2Roots = list()
+for i in range(len(p2Array)):
+        if(countRoots(f, i) == 2):
+                p2Roots.append(i)
+print(p2Roots)
 
 '''
 Suggested Activity 7
@@ -407,17 +376,44 @@ respectively
 '''
 # Hér voru skoðuð gildi á p frá 0 upp í 30
 
-# Fyrir p2 = 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 9.5, 10.0, 10.5, 11.0, 11.5  eru núll lausnir
-# Fyrir p2 = 4.0, 4.5, 8.0, 8.5, 9.0 eru tvær lausnir
-# Fyrir p2 = 5.0, 5.5., 6.0, 6.5, 7.5 eru fjórar lausnir 
-# Fyrir p2 = 7.0 eru sex lausnir
+# Stikar úr Suggested Activity 4
+x1 = 5 
+x2, y2 = 0, 6
+L1 = L3 = 3 
+L2 = 3*np.sqrt(2)
+gamma = np.pi/4
+p1 = 5
+p3 = 3
 
-# Gefið: f(theta) hefur í mesta lagi 6 rætur á bilinu sem við takmörkum
-# okkur við, þ.e. [-pi, pi]
-# Vitum að p2 >= 0 en vitum ekki hvert hámarkið er.
-# Eigum við að skoða p2 upp í ~ infinity?
-# Þurfum að telja núllstöðvar. Með hve litlu millibili? p2 = 1.1 og svo p2 1.11?
+no = 100
+noSolutions = []
+print(noSolutions)
+i = 0.0
+for p2 in range(no):
+    noRoots = countRoots(f, i)
+    noSolutions.append(countRoots(f, i))
+    i+=0.2
 
-# Finnum núllstöðvar með upphafsgiski og svo ítrun. Ef við prófum theta = 0.1 og svo
-# theta 0.1000001 þá eigum við hættu á að lenda á sömu núllstöðinni. Það væri hægt að
-# halda utan um síðustu núllstöð.
+noSolutions = np.array(noSolutions)
+
+theRange = np.arange(0, 100, 1)
+
+figure, axis = plt.subplots()
+
+# Teiknum grafið
+axis.plot(theRange, noSolutions[theRange])
+
+# Setjum titil á grafið og ásana
+axis.set(xlabel=r"${p_2}$", 
+                ylabel="Fjöldi staða (núllstöðva)",
+                title = "")
+axis.set_ylim([0,6])
+axis.grid()
+
+# Setjum minnsta sýnilega bilið á x - ásnum
+plt.xticks(np.arange(0, 100, 5))
+plt.yticks(np.arange(0, 6, 1))
+# Vistum myndina
+fileString = "sa7" + ".png"
+figure.savefig(fileString)
+plt.show()
