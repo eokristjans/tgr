@@ -1,0 +1,1260 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{v1-eok4-dfb2}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Verkefni I - Kinematics of the Stewart
+Platform}\label{verkefni-i---kinematics-of-the-stewart-platform}
+
+\subsection{Numerical Analysis, 2nd ed., Sauer, Chapter
+1}\label{numerical-analysis-2nd-ed.-sauer-chapter-1}
+
+\subsection{Töluleg Greining STAE405}\label{tuxf6luleg-greining-stae405}
+
+\subsubsection{Háskóli Íslands}\label{huxe1skuxf3li-uxedslands}
+
+\subsubsection{Kennari:}\label{kennari}
+
+\begin{itemize}
+\tightlist
+\item
+  Sigurður Freyr Hafstein
+\end{itemize}
+
+\subsubsection{Nemendur:}\label{nemendur}
+
+\begin{itemize}
+\tightlist
+\item
+  Erling Óskar Kristjánsson eok4@hi.is
+\item
+  Davíð Freyr Björnsson dfb2@hi.is
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} \PYZhy{}*\PYZhy{} coding: utf\PYZhy{}8 \PYZhy{}*\PYZhy{}}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k}{as} \PY{n+nn}{scOpt}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        
+        \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} }
+        \PY{l+s+sd}{Ytri breytur (stikar) sem við skilgreinum sem}
+        \PY{l+s+sd}{global eða viðværar breytur }
+        \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+        
+        \PY{c+c1}{\PYZsh{} global x1, x2, y2, L1, L2, L3, gamma, p1, p2, p3 }
+        \PY{n}{x1}\PY{o}{=}\PY{n}{y2}   \PY{o}{=} \PY{l+m+mi}{4}     \PY{c+c1}{\PYZsh{} tekid af fig 1.15}
+        \PY{n}{x2}      \PY{o}{=} \PY{l+m+mi}{0}     \PY{c+c1}{\PYZsh{} tekid af fig 1.15}
+        \PY{n}{L1}      \PY{o}{=} \PY{l+m+mi}{2}     
+        \PY{n}{L2} \PY{o}{=} \PY{n}{L3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{gamma}   \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{2}
+        \PY{n}{p1}\PY{o}{=}\PY{n}{p2}\PY{o}{=}\PY{n}{p3}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Suggested Activity 1}\label{suggested-activity-1}
+
+Parameters \[L_1, L_2, L_3, γ, x_1, x_2, y_2\] are fixed constants,
+strut lengths \[p_1, p_2, p_3\] will be known for a given pose.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Fallið f skilar f(theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2, y2)}
+        \PY{c+c1}{\PYZsh{} fyrir gefin gildi á theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2 og y2}
+        \PY{k}{def} \PY{n+nf}{f}\PY{p}{(}\PY{n}{theta}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{:}
+            \PY{n}{A2}      \PY{o}{=} \PY{n}{L3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{x1}
+            \PY{n}{B2}      \PY{o}{=} \PY{n}{L3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta}\PY{p}{)}
+            \PY{n}{A3}      \PY{o}{=} \PY{n}{L2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta}\PY{o}{+}\PY{n}{gamma}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{x2}
+            \PY{n}{B3}      \PY{o}{=} \PY{n}{L2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta}\PY{o}{+}\PY{n}{gamma}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{y2}
+            \PY{n}{aNum}    \PY{o}{=} \PY{n}{p2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{p1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{A2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{B2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{bNum}    \PY{o}{=} \PY{n}{p3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{p1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{A3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{B3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{D}       \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{p}{(}\PY{n}{A2}\PY{o}{*}\PY{n}{B3}\PY{o}{\PYZhy{}}\PY{n}{B2}\PY{o}{*}\PY{n}{A3}\PY{p}{)}
+            \PY{n}{N1}      \PY{o}{=} \PY{n}{B3}\PY{o}{*}\PY{n}{aNum}\PY{o}{\PYZhy{}}\PY{n}{B2}\PY{o}{*}\PY{n}{bNum}
+            \PY{n}{N2}      \PY{o}{=}\PY{o}{\PYZhy{}}\PY{n}{A3}\PY{o}{*}\PY{n}{aNum}\PY{o}{+}\PY{n}{A2}\PY{o}{*}\PY{n}{bNum} 
+            \PY{k}{return} \PY{n}{N1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{N2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{p1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{D}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+
+    Látum \(\theta_1 = -\pi/4\) og \(\theta_2 = \pi/4\).
+
+Nú fæst að \(f(\theta_1) =\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-4.547473508864641e-13
+
+    \end{Verbatim}
+
+    og \(f(\theta_2) =\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}     
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-4.547473508864641e-13
+
+    \end{Verbatim}
+
+    Eins og sést þá eru þessar tölur mjög nálægt núlli, innan skekkju
+\(10^{-12}\), svo allt lítur vel út hingað til.
+
+\subsection{Suggested Activity 2}\label{suggested-activity-2}
+
+Plot f(θ) on \([−π,π]\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{fPlot}\PY{p}{(}\PY{n}{thetaL}\PY{p}{,} \PY{n}{thetaH}\PY{p}{,} \PY{n}{fileName}\PY{p}{,} \PY{n}{graphTitle}\PY{p}{,} 
+                  \PY{n}{minGraphVal}\PY{p}{,} \PY{n}{maxGraphVal}\PY{p}{,} \PY{n}{interval}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} Setjum bilið á theta sem við viljum}
+                \PY{c+c1}{\PYZsh{} teikna f(theta) fyrir}
+                \PY{n}{theRange} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{thetaL}\PY{p}{,} \PY{n}{thetaH}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Finnum hámarks og lágmarks gildi f á því bili}
+                \PY{n}{maxFunVal} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{theRange}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                  \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}
+                \PY{n}{minFunVal} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{theRange}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                  \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Upphafsstillum myndina og ásana}
+                \PY{n}{figure}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Teiknum grafið}
+                \PY{n}{axis}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{theRange}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{theRange}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                      \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Setjum titil á grafið og ásana}
+                \PY{n}{axis}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{xlabel}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{Theta\PYZcb{}\PYZdl{} [radians]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} 
+                        \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}f(}\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{Theta\PYZcb{})\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                        \PY{n}{title} \PY{o}{=} \PY{n}{graphTitle}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Setjum hæsta og lægsta gildið á y\PYZhy{}ás}
+                \PY{n}{axis}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{n}{minGraphVal}\PY{p}{,}\PY{n}{maxGraphVal}\PY{p}{]}\PY{p}{)}
+                \PY{n}{axis}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Vistum myndina}
+                \PY{n}{fileString} \PY{o}{=} \PY{n}{fileName} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.png}\PY{l+s+s2}{\PYZdq{}}
+                \PY{n}{figure}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{fileString}\PY{p}{)}
+                
+                \PY{c+c1}{\PYZsh{} Setjum minnsta sýnilega bilið á x \PYZhy{} ásnum}
+                \PY{c+c1}{\PYZsh{} og y \PYZhy{} ásnum}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{thetaL}\PY{p}{,} \PY{n}{thetaH}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{yticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{minGraphVal}\PY{p}{,}\PY{n}{maxGraphVal}\PY{p}{,}\PY{n}{interval}\PY{p}{)}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Teiknum \(f(\theta)\) fyrir \(\theta\) frá \(-\pi\) upp í \(\pi\):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fPlot}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Suggested Activity 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2500}\PY{p}{,} \PY{l+m+mi}{35000}\PY{p}{,} \PY{l+m+mi}{2500}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Python fallið fSolver skilar núllstöð \(f\). Þarf upphafságiskun sem
+byggir á því að skoða graf af \(f(\theta)\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{fSolver}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{thetaGuess}\PY{p}{)}\PY{p}{:} 
+                \PY{n}{func} \PY{o}{=} \PY{k}{lambda} \PY{n}{theta} \PY{p}{:} \PY{n}{f}\PY{p}{(}\PY{n}{theta}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                        \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}
+                \PY{n}{thetaSol} \PY{o}{=} \PY{n}{scOpt}\PY{o}{.}\PY{n}{fsolve}\PY{p}{(}\PY{n}{func}\PY{p}{,} \PY{n}{thetaGuess}\PY{p}{)}
+                \PY{k}{return} \PY{n}{thetaSol}
+\end{Verbatim}
+
+
+    Skoðum graf af \$ f(\theta)\$ og sjáum þá fyrir hvaða gildi á
+\(\theta, f(\theta)\) er nálægt núlli
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{thetaCalculated} \PY{o}{=} \PY{n}{fSolver}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n}{thetaGiven} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Núllstöð f(theta) sem fékkst með ítrun er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetaCalculated}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gefin núllstöð f(theta) er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetaGiven}\PY{p}{)}
+        
+        \PY{n}{thetaCalculated} \PY{o}{=} \PY{n}{fSolver}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n}{thetaGiven} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Núllstöð f(theta) sem fékkst með ítrun er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetaCalculated}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Gefin núllstöð f(theta) er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetaGiven}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Núllstöð f(theta) sem fékkst með ítrun er: [0.78539816]
+Gefin núllstöð f(theta) er: 0.7853981633974483
+Núllstöð f(theta) sem fékkst með ítrun er: [-0.78539816]
+Gefin núllstöð f(theta) er: -0.7853981633974483
+
+    \end{Verbatim}
+
+    \subsection{Suggested Activity 3}\label{suggested-activity-3}
+
+Reproduce Figure 1.15
+
+    Látum
+
+\begin{align*}
+xL_2 &:= x + L_2 \cdot \cos(\theta + \gamma)\\
+yL_2 &:= y + L_2 \cdot \sin(\theta + \gamma)\\
+xL_3 &:= x + L_3 \cdot \cos(\theta + \gamma)\\
+yL_3 &:= y + L_3 \cdot \sin(\theta + \gamma)
+\end{align*}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Teiknar Stewart Platform}
+        \PY{k}{def} \PY{n+nf}{plotStewartPlatform}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{xL2}\PY{p}{,} \PY{n}{yL2}\PY{p}{,} \PY{n}{xL3}\PY{p}{,} \PY{n}{yL3}\PY{p}{,} 
+                                \PY{n}{plotTitle}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Vantar titil!}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{plotName}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Vantar}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} Teiknar þrihyrning. Byrjum lengst til }
+                \PY{c+c1}{\PYZsh{} vinstri og forum rettsaelis}
+                \PY{c+c1}{\PYZsh{} Her er (x, y) = (1,2), }
+                \PY{c+c1}{\PYZsh{}        (xL2, yL2) = (2,3)}
+                \PY{c+c1}{\PYZsh{}        (xL3, yL3) = (2,1)}
+                \PY{p}{(}\PY{n}{triangleX}\PY{p}{,} \PY{n}{triangleY}\PY{p}{)}  \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{p}{,} \PY{n}{xL2}\PY{p}{,} \PY{n}{xL3}\PY{p}{,} \PY{n}{x}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{y}\PY{p}{,} \PY{n}{yL2}\PY{p}{,} \PY{n}{yL3}\PY{p}{,} \PY{n}{y}\PY{p}{]}
+                \PY{n}{fig}\PY{p}{,} \PY{n}{plotObject} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{triangleX}\PY{p}{,} \PY{n}{triangleY}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{2.5}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Baetum vid fyrsta akkerinu}
+                \PY{c+c1}{\PYZsh{} sem hefur hnit fra (0,0) i (x,y)}
+                \PY{n}{firstAnchorX}\PY{p}{,} \PY{n}{firstAnchorY}  \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{x}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{y}\PY{p}{]}
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{firstAnchorX}\PY{p}{,} \PY{n}{firstAnchorY}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Baetum vid odru akkerinu}
+                \PY{c+c1}{\PYZsh{} sem hefur hnit fra (x2, y2)}
+                \PY{c+c1}{\PYZsh{} til (xL2, yL2) }
+                \PY{n}{secondAnchorX}\PY{p}{,} \PY{n}{secondAnchorY}  \PY{o}{=} \PY{p}{[}\PY{n}{x2}\PY{p}{,}\PY{n}{xL2}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{y2}\PY{p}{,}\PY{n}{yL2}\PY{p}{]}
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{secondAnchorX}\PY{p}{,} \PY{n}{secondAnchorY}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Baetum vid thridja akkerinu}
+                \PY{c+c1}{\PYZsh{} sem hefur hnit fra (xL3, yL3)}
+                \PY{c+c1}{\PYZsh{} til (x1, 0)}
+                \PY{n}{thirdAnchorX}\PY{p}{,} \PY{n}{thirdAnchorY}  \PY{o}{=} \PY{p}{[}\PY{n}{x1}\PY{p}{,}\PY{n}{xL3}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{yL3}\PY{p}{]}
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{thirdAnchorX}\PY{p}{,} \PY{n}{thirdAnchorY}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Baetum vid punktum fyrir }
+                \PY{c+c1}{\PYZsh{} akkaeri eitt, tvo og thrju }
+                \PY{c+c1}{\PYZsh{} sem hafa hnitin}
+                \PY{c+c1}{\PYZsh{} (0,0), (x2, y2) og (x1, 0)}
+                \PY{n}{anchorPointsX}\PY{p}{,} \PY{n}{anchorPointsY}  \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{y2}\PY{p}{]}
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{anchorPointsX}\PY{p}{,} \PY{n}{anchorPointsY}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Baetum vid punktum fyrir}
+                \PY{c+c1}{\PYZsh{} hvert horn thrihyrningsins}
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{triangleX}\PY{p}{,} \PY{n}{triangleY}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+                \PY{n}{plotObject}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{xlabel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} 
+                        \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                        \PY{n}{title} \PY{o}{=} \PY{n}{plotTitle}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} Vistum myndina}
+                \PY{n}{plotSaveFile} \PY{o}{=} \PY{n}{plotName} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.png}\PY{l+s+s2}{\PYZdq{}}
+                \PY{n}{fig}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{plotSaveFile}\PY{p}{)}
+                \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Plot SA3(a):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{x}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}
+        \PY{n}{xL2}\PY{p}{,} \PY{n}{yL2} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}
+        \PY{n}{xL3}\PY{p}{,} \PY{n}{yL3} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}
+        \PY{n}{plotName} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa3a}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{plotTitle} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Suggested Activity 3 (a)}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{plotStewartPlatform}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,} 
+                            \PY{n}{xL2}\PY{p}{,} \PY{n}{yL2}\PY{p}{,} \PY{n}{xL3}\PY{p}{,} \PY{n}{yL3}\PY{p}{,} \PY{n}{plotTitle}\PY{p}{,} \PY{n}{plotName}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Plot SA3(b):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{} Plot SA3(b) \PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{n}{x}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}
+        \PY{n}{xL2}\PY{p}{,} \PY{n}{yL2} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}
+        \PY{n}{xL3}\PY{p}{,} \PY{n}{yL3} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{2}
+        \PY{n}{plotName} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa3b}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{plotTitle} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Suggested Activity 3 (b)}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{plotStewartPlatform}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,}
+                            \PY{n}{xL2}\PY{p}{,} \PY{n}{yL2}\PY{p}{,} \PY{n}{xL3}\PY{p}{,} \PY{n}{yL3}\PY{p}{,} \PY{n}{plotTitle}\PY{p}{,} \PY{n}{plotName}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Suggested Activity 4}\label{suggested-activity-4}
+
+Solve the forward kinematics problem for the planar Stewart platform.
+Plot \(f(\theta)\) and then solve \(f(\theta)\) = 0.
+
+Við sjáum að ferilinn \(f(\theta)\) er mjög flatur í kringum
+\(f(\theta) = 0\), sem bendir til þess að villumögnunin (e. error
+magnification factor) sé mikil á þessu svæði. Þannig þó \(|f(\theta)|\)
+sé mjög lág tala fyrir eitthvað \(\theta\) þá getum við samt verið
+hlutfallslega mjög langt frá hinni réttu rót \(f(\theta)\). Því þarf
+sérstaklega að gæta þess að stop skilyrðið sé ekki of slakt við leit
+rótarinnar.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Stikar}
+        \PY{n}{x1} \PY{o}{=} \PY{l+m+mi}{5} 
+        \PY{n}{x2}\PY{p}{,} \PY{n}{y2} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{6}
+        \PY{n}{L1} \PY{o}{=} \PY{n}{L3} \PY{o}{=} \PY{l+m+mi}{3} 
+        \PY{n}{L2} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{gamma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
+        \PY{n}{p1} \PY{o}{=} \PY{n}{p2} \PY{o}{=} \PY{l+m+mi}{5}
+        \PY{n}{p3} \PY{o}{=} \PY{l+m+mi}{3}
+        
+        \PY{c+c1}{\PYZsh{} Teiknum f(theta) fyrir theta frá \PYZhy{}pi upp í pi}
+        \PY{n}{fPlot}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa4\PYZhy{}0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Suggested Activity 4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{50000}\PY{p}{,} \PY{l+m+mi}{350000}\PY{p}{,} \PY{l+m+mi}{50000}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Útfrá mynd sést að ágætis upphafsgisk fyrir þessar fjórar núllstöðvar
+f(theta) eru -0.7, -0.3, 1.1, 2.1. Finnum núna fjórar núllstöðvar
+\(f(\theta)\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Geymum núllstöðvarnar og ágiskanirnar í fylki}
+        \PY{n}{thetas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        \PY{n}{thetasGuess} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{1.1}\PY{p}{,} \PY{l+m+mf}{2.1}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Hér fáum við út réttar núllstöðvar}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ef theta er raunveruleg núllstöð þá ætti}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{f(theta) að vera mjög nálægt núlli }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{thetas}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{thetas}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{fSolver}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{thetasGuess}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú fæst að theta er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Svo er f(theta):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{thetas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Geymir x og y gildin fyrir útreiknaðar núllstöðvar f(theta)}
+        \PY{n}{xy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Fallið xyCalc reiknar út gildin á x og y miðað við gefin}
+        \PY{c+c1}{\PYZsh{} gildi á theta, p1, p2, p3, L1, L2, L3, gamma, x1, x2 og y2.}
+        \PY{k}{def} \PY{n+nf}{xyCalc}\PY{p}{(}\PY{n}{theta}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{:}
+            \PY{n}{A2}      \PY{o}{=} \PY{n}{L3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{x1}
+            \PY{n}{B2}      \PY{o}{=} \PY{n}{L3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta}\PY{p}{)}
+            \PY{n}{A3}      \PY{o}{=} \PY{n}{L2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta}\PY{o}{+}\PY{n}{gamma}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{x2}
+            \PY{n}{B3}      \PY{o}{=} \PY{n}{L2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta}\PY{o}{+}\PY{n}{gamma}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{y2}
+            \PY{n}{aNum}    \PY{o}{=} \PY{n}{p2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{p1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{A2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{B2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{bNum}    \PY{o}{=} \PY{n}{p3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{p1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{A3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{B3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+            \PY{n}{D}       \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{p}{(}\PY{n}{A2}\PY{o}{*}\PY{n}{B3}\PY{o}{\PYZhy{}}\PY{n}{B2}\PY{o}{*}\PY{n}{A3}\PY{p}{)}
+            \PY{n}{N1}      \PY{o}{=} \PY{n}{B3}\PY{o}{*}\PY{n}{aNum}\PY{o}{\PYZhy{}}\PY{n}{B2}\PY{o}{*}\PY{n}{bNum}
+            \PY{n}{N2}      \PY{o}{=}\PY{o}{\PYZhy{}}\PY{n}{A3}\PY{o}{*}\PY{n}{aNum}\PY{o}{+}\PY{n}{A2}\PY{o}{*}\PY{n}{bNum} 
+            \PY{n}{x} \PY{o}{=} \PY{n}{N1}\PY{o}{/}\PY{n}{D}
+            \PY{n}{y} \PY{o}{=} \PY{n}{N2}\PY{o}{/}\PY{n}{D}
+            \PY{k}{return} \PY{p}{[}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{]}
+        
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:} 
+                \PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{xyCalc}\PY{p}{(}\PY{n}{thetas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Útfrá útreiknuðum theta, x og y gildum getum við síðan reiknað xL2, yL2, xL3, yL3}
+        \PY{n}{xyL23} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{xyLCalc}\PY{p}{(}\PY{n}{theta}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{:} 
+                \PY{n}{xL2} \PY{o}{=} \PY{n}{x} \PY{o}{+} \PY{n}{L2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta} \PY{o}{+} \PY{n}{gamma}\PY{p}{)}
+                \PY{n}{yL2} \PY{o}{=} \PY{n}{y} \PY{o}{+} \PY{n}{L2}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta} \PY{o}{+} \PY{n}{gamma}\PY{p}{)}
+                \PY{n}{xL3} \PY{o}{=} \PY{n}{x} \PY{o}{+} \PY{n}{L3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{theta}\PY{p}{)}
+                \PY{n}{yL3} \PY{o}{=} \PY{n}{y} \PY{o}{+} \PY{n}{L3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{theta}\PY{p}{)}
+                \PY{k}{return} \PY{p}{[}\PY{n}{xL2}\PY{p}{,} \PY{n}{yL2}\PY{p}{,} \PY{n}{xL3}\PY{p}{,} \PY{n}{yL3}\PY{p}{]}
+        
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{xyLCalc}\PY{p}{(}\PY{n}{thetas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Teiknum Stewart platform fyrir þessar fjórar núllstöðvar f(theta)}
+        \PY{c+c1}{\PYZsh{} og könnum í leiðinni hvort lengdirnar á struts séu p1, p2 og p3}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p1Calc} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{p2Calc} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x1}\PY{p}{,} \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{p3Calc} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x2}\PY{p}{,} \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{y2}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Fyrir núllstöðina}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{þá fást eftirfarandi niðurstöður}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú er p1 = 5 en útreiknað gildi er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{p1Calc}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú er p2 = 5 en útreiknað gildi er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{p2Calc}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú er p3 = 3 en útreiknað gildi er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{p3Calc}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{pName} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa4\PYZhy{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+                \PY{n}{plotStewartPlatform}\PY{p}{(}\PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xy}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{xyL23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Suggested Activity 4}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{pName}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Ef theta er raunveruleg núllstöð þá ætti
+f(theta) að vera mjög nálægt núlli 
+
+Nú fæst að theta er: -0.7208492044603826
+Svo er f(theta): -1.3096723705530167e-10 
+
+Nú fæst að theta er: -0.33100518428386466
+Svo er f(theta): 4.9112713895738125e-11 
+
+Nú fæst að theta er: 1.1436855178213738
+Svo er f(theta): 5.4569682106375694e-12 
+
+Nú fæst að theta er: 2.115909014086863
+Svo er f(theta): 3.710738383233547e-08 
+
+Fyrir núllstöðina -0.7208492044603826 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 4.999999999999995
+Nú er p2 = 5 en útreiknað gildi er: 4.999999999999995
+Nú er p3 = 3 en útreiknað gildi er: 2.999999999999991
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina -0.33100518428386466 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 5.000000000000008
+Nú er p2 = 5 en útreiknað gildi er: 5.000000000000008
+Nú er p3 = 3 en útreiknað gildi er: 3.0000000000000124
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina 1.1436855178213738 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 5.000000000000001
+Nú er p2 = 5 en útreiknað gildi er: 5.0
+Nú er p3 = 3 en útreiknað gildi er: 3.0000000000000004
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina 2.115909014086863 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 5.000000000000496
+Nú er p2 = 5 en útreiknað gildi er: 5.000000000000496
+Nú er p3 = 3 en útreiknað gildi er: 3.000000000000825
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Suggested Activity 5}\label{suggested-activity-5}
+
+Change strut length to \(p_2 = 7\) and re-solve the problem. For these
+parameters, there are six poses.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Change the value of p2}
+        \PY{n}{p2} \PY{o}{=} \PY{l+m+mi}{7}
+        
+        \PY{c+c1}{\PYZsh{} Teiknum f(theta) fyrir theta frá \PYZhy{}pi upp í pi}
+        \PY{n}{fPlot}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa5\PYZhy{}0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Suggested Activity 5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{50000}\PY{p}{,} \PY{l+m+mi}{250000}\PY{p}{,} \PY{l+m+mi}{50000}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Finnum núna sex núllstöðvar f(theta)}
+        \PY{c+c1}{\PYZsh{} Hér er ferillinn mjög flatur í kringum fimm}
+        \PY{c+c1}{\PYZsh{} af sex núllstöðvunum}
+        \PY{n}{thetas2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Útfrá mynd sést að ágætis upphafsgisk fyrir}
+        \PY{c+c1}{\PYZsh{} þessar sex núllstöðvar f(theta) eru}
+        \PY{c+c1}{\PYZsh{} \PYZhy{}0.7, \PYZhy{}0.4, 0, 0.42, 1, 2.5}
+        \PY{n}{thetasGuess2} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.4}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mf}{0.42}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Hér fáum við út réttar núllstöðvar}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ef theta er raunveruleg núllstöð þá ætti}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{f(theta) að vera mjög nálægt núlli }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{thetas2}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{thetas2}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{fSolver}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{thetasGuess2}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú fæst að theta er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetas2}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Svo er f(theta):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{f}\PY{p}{(}\PY{n}{thetas2}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                            \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Geymir x og y gildin fyrir útreiknaðar núllstöðvar f(theta)}
+        \PY{n}{xy2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{:} 
+                \PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{xyCalc}\PY{p}{(}\PY{n}{thetas2}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Útfrá útreiknuðum theta, x og y gildum getum við síðan reiknað }
+        \PY{c+c1}{\PYZsh{} xL2, yL2, xL3, yL3}
+        \PY{n}{xy2L23} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{:}
+                \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{xyLCalc}\PY{p}{(}\PY{n}{thetas2}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                    \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Teiknum Stewart platform fyrir þessar sex núllstöðvar f(theta)}
+        \PY{c+c1}{\PYZsh{} og könnum í leiðinni hvort lengdirnar á struts séu p1, p2 og p3}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{:}
+                \PY{n}{p1Calc2} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{p2Calc2} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x1}\PY{p}{,} \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{p3Calc2} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{hypot}\PY{p}{(}\PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x2}\PY{p}{,} \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{y2}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Fyrir núllstöðina}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{thetas2}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} 
+                      \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{þá fást eftirfarandi niðurstöður}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú er p1 = 5 en útreiknað gildi er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{p1Calc2}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú er p2 = 7 en útreiknað gildi er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{p2Calc2}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nú er p3 = 3 en útreiknað gildi er:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{p3Calc2}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{pName} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa5\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+                \PY{n}{plotStewartPlatform}\PY{p}{(}\PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xy2}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+                                    \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{xy2L23}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} 
+                                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Suggested Activity 5}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{pName}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Ef theta er raunveruleg núllstöð þá ætti
+f(theta) að vera mjög nálægt núlli 
+
+Nú fæst að theta er: -0.673157486371671
+Svo er f(theta): -1.4551915228366852e-11 
+
+Nú fæst að theta er: -0.3547402704156737
+Svo er f(theta): 3.637978807091713e-12 
+
+Nú fæst að theta er: 0.03776676057591458
+Svo er f(theta): -1.8189894035458565e-12 
+
+Nú fæst að theta er: 0.45887818104896444
+Svo er f(theta): -6.923528417246416e-11 
+
+Nú fæst að theta er: 0.9776728950003634
+Svo er f(theta): -1.000444171950221e-11 
+
+Nú fæst að theta er: 2.513852799350387
+Svo er f(theta): 4.0745362639427185e-10 
+
+Fyrir núllstöðina -0.673157486371671 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 4.999999999999998
+Nú er p2 = 7 en útreiknað gildi er: 6.999999999999999
+Nú er p3 = 3 en útreiknað gildi er: 2.9999999999999987
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina -0.3547402704156737 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 5.0
+Nú er p2 = 7 en útreiknað gildi er: 7.0
+Nú er p3 = 3 en útreiknað gildi er: 3.0
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina 0.03776676057591458 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 4.999999999999998
+Nú er p2 = 7 en útreiknað gildi er: 6.999999999999998
+Nú er p3 = 3 en útreiknað gildi er: 2.999999999999997
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina 0.45887818104896444 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 4.999999999999774
+Nú er p2 = 7 en útreiknað gildi er: 6.999999999999839
+Nú er p3 = 3 en útreiknað gildi er: 2.9999999999996243
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina 0.9776728950003634 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 4.9999999999999964
+Nú er p2 = 7 en útreiknað gildi er: 6.999999999999997
+Nú er p3 = 3 en útreiknað gildi er: 2.9999999999999947
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Fyrir núllstöðina 2.513852799350387 þá fást eftirfarandi niðurstöður
+Nú er p1 = 5 en útreiknað gildi er: 5.000000000000003
+Nú er p2 = 7 en útreiknað gildi er: 7.000000000000002
+Nú er p3 = 3 en útreiknað gildi er: 3.0000000000000053
+
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Suggested Activity 6}\label{suggested-activity-6}
+
+Find a strut length \(p_2\), with the rest of the parameters as in Step
+4, for which there are only two poses.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Stikar úr Suggested Activity 4}
+        \PY{n}{x1} \PY{o}{=} \PY{l+m+mi}{5} 
+        \PY{n}{x2}\PY{p}{,} \PY{n}{y2} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{6}
+        \PY{n}{L1} \PY{o}{=} \PY{n}{L3} \PY{o}{=} \PY{l+m+mi}{3} 
+        \PY{n}{L2} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{gamma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
+        \PY{n}{p1} \PY{o}{=} \PY{l+m+mi}{5}
+        \PY{n}{p3} \PY{o}{=} \PY{l+m+mi}{3}
+        
+        \PY{c+c1}{\PYZsh{} Fall sem telur fjölda róta fallsins f(theta)}
+        \PY{c+c1}{\PYZsh{} fyrir gefna stika}
+        \PY{k}{def} \PY{n+nf}{countRoots}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{p2}\PY{p}{)}\PY{p}{:} 
+                \PY{n}{deltaTheta} \PY{o}{=} \PY{l+m+mf}{0.001}
+                \PY{n}{thetaOld} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}
+                \PY{n}{oldSign} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{thetaOld}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                            \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}
+                \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+                \PY{k}{for} \PY{n}{theta} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{+}\PY{n}{deltaTheta}\PY{p}{,} \PY{n}{deltaTheta}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{thetaNew} \PY{o}{=} \PY{n}{theta}
+                        \PY{n}{newSign} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{thetaNew}\PY{p}{,} \PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} 
+                                    \PY{n}{L1}\PY{p}{,} \PY{n}{L2}\PY{p}{,} \PY{n}{L3}\PY{p}{,} \PY{n}{gamma}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}
+                        \PY{k}{if}\PY{p}{(}\PY{n}{newSign} \PY{o}{!=} \PY{n}{oldSign}\PY{p}{)}\PY{p}{:}
+                                \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                        \PY{n}{oldSign} \PY{o}{=} \PY{n}{newSign}
+                \PY{k}{return} \PY{n}{count}
+\end{Verbatim}
+
+
+    Höfum séð að það eru 4 rætur og þar með 4 stöður þegar \(p_2 = 5\) Höfum
+séð að það eru 6 rætur og þar með 6 stöður þegar \(p_2 = 7\) Skoðum
+gildi þar í kring. Vitum að það eru (líklegast) formerkjaskipti í rótum.
+Einnig þar sem \(p_2\) er mælikvarði á lengd vitum við að \(p>0\). Því
+leitum við að formerkjaskiptum á bilinu {[}\$0,12{]}\$
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Prófum mismunandi gildi á p2}
+        \PY{k}{def} \PY{n+nf}{p2Roots}\PY{p}{(}\PY{n}{p2Min}\PY{p}{,} \PY{n}{p2Max}\PY{p}{,} \PY{n}{interval}\PY{p}{,} \PY{n}{noRoots}\PY{p}{)}\PY{p}{:} 
+          \PY{n}{p2Array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{p2Min}\PY{p}{,} \PY{n}{p2Max}\PY{o}{+}\PY{n}{interval}\PY{p}{,} \PY{n}{interval}\PY{p}{)}
+          \PY{n}{p2Roots} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{p}{)}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{p2Array}\PY{p}{:}
+                  \PY{k}{if}\PY{p}{(}\PY{n}{countRoots}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{i}\PY{p}{)} \PY{o}{==} \PY{n}{noRoots}\PY{p}{)}\PY{p}{:}
+                          \PY{n}{p2Roots}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+        
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{p2Roots}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{p2Roots}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{p2Roots}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3.8000000000000003
+3.9000000000000004
+4.0
+4.1000000000000005
+4.2
+4.3
+4.4
+4.5
+4.6000000000000005
+4.7
+4.800000000000001
+7.9
+8.0
+8.1
+8.200000000000001
+8.3
+8.4
+8.5
+8.6
+8.700000000000001
+8.8
+8.9
+9.0
+9.1
+9.200000000000001
+
+    \end{Verbatim}
+
+    Við sjáum að fyrir \(p_2 \in [3.8, 4.8] \text{ } \cup [7.9, 9.2]\) þá
+fást 2 stöður.
+
+    \subsection{Suggested Activity 7}\label{suggested-activity-7}
+
+Calculate the intervals in \(p_2\), with the rest of the parameters as
+in Step 4, for which there are 0, 2, 4 and 6 poses, respectively
+
+    Byrjum á að plotta graf með gildinu á \(p_2\) á x - ás og fjölda staða á
+y - ás. Liðir Stewart platform virki sem skyldi þá er eðlilegt að gera
+ráð fyrir því að einum af stoðunum (strut) séu margfalt lengri en hinir.
+Því látum við hámarksgildi \(p_2\) vera 100 eða tuttuguföld stærð
+næstlengstu stoðarinnar, \(p_1\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Stikar úr Suggested Activity 4}
+        \PY{n}{x1} \PY{o}{=} \PY{l+m+mi}{5} 
+        \PY{n}{x2}\PY{p}{,} \PY{n}{y2} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{6}
+        \PY{n}{L1} \PY{o}{=} \PY{n}{L3} \PY{o}{=} \PY{l+m+mi}{3} 
+        \PY{n}{L2} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{gamma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{4}
+        \PY{n}{p1} \PY{o}{=} \PY{l+m+mi}{5}
+        \PY{n}{p3} \PY{o}{=} \PY{l+m+mi}{3}
+        
+        \PY{n}{maxVal} \PY{o}{=} \PY{l+m+mi}{100}
+        \PY{n}{interval} \PY{o}{=} \PY{l+m+mf}{0.1}
+        \PY{n}{no} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{maxVal}\PY{o}{/}\PY{n}{interval}\PY{p}{)}
+        \PY{n}{noSolutions} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{no}\PY{p}{)}
+        \PY{n}{p2} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{noSolutions}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+          \PY{n}{noSolutions}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{countRoots}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{p2}\PY{p}{)}
+          \PY{n}{p2} \PY{o}{+}\PY{o}{=} \PY{n}{interval}
+        
+        \PY{n}{theRange} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{maxVal}\PY{p}{,} \PY{n}{interval}\PY{p}{)}
+        \PY{n}{matrixRange} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{noSolutions}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{n}{figure}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Teiknum grafið}
+        \PY{n}{axis}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{theRange}\PY{p}{,} \PY{n}{noSolutions}\PY{p}{[}\PY{n}{matrixRange}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Setjum titil á grafið og ásana}
+        \PY{n}{axis}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{xlabel}\PY{o}{=}\PY{l+s+sa}{r}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+si}{\PYZob{}p\PYZus{}2\PYZcb{}}\PY{l+s+s2}{\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} 
+                        \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Fjöldi staða (núllstöðva)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                        \PY{n}{title} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{axis}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{]}\PY{p}{)}
+        \PY{n}{axis}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Setjum minnsta sýnilega bilið á x \PYZhy{} ásnum}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{maxVal}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{yticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Vistum myndina}
+        \PY{n}{fileString} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sa7}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{.png}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{figure}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{fileString}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Við sjáum að það fást 0 stöður þegar \(10 <p_2 \leq 100\). Til að finna
+hvar fjöldi staða er ekki núll, takmörkum okkur þá við bilið
+\(0 < p_2 \leq 10\).
+
+    Úr Suggested Activity 6 höfm við að það fást 2 stöður þegar
+\(p_2 \in [3.8, 4.8] \text{ } \cup [7.9, 9.2]\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{p2Roots}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+4.9
+5.0
+5.1000000000000005
+5.2
+5.300000000000001
+5.4
+5.5
+5.6000000000000005
+5.7
+5.800000000000001
+5.9
+6.0
+6.1000000000000005
+6.2
+6.300000000000001
+6.4
+6.5
+6.6000000000000005
+6.7
+6.800000000000001
+6.9
+7.1000000000000005
+7.2
+7.300000000000001
+7.4
+7.5
+7.6000000000000005
+7.7
+7.800000000000001
+
+    \end{Verbatim}
+
+    Við sjáum að það fást 4 stöður þegar
+\(p_2 \in [4.9, 6.9] \text{ } \cup [7.1, 7.8]\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{p2Roots}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+7.0
+
+    \end{Verbatim}
+
+    Við sjáum að það fást 6 stöður þegar \(p_2 = 7\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{p2Roots}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.0
+0.1
+0.2
+0.30000000000000004
+0.4
+0.5
+0.6000000000000001
+0.7000000000000001
+0.8
+0.9
+1.0
+1.1
+1.2000000000000002
+1.3
+1.4000000000000001
+1.5
+1.6
+1.7000000000000002
+1.8
+1.9000000000000001
+2.0
+2.1
+2.2
+2.3000000000000003
+2.4000000000000004
+2.5
+2.6
+2.7
+2.8000000000000003
+2.9000000000000004
+3.0
+3.1
+3.2
+3.3000000000000003
+3.4000000000000004
+3.5
+3.6
+3.7
+9.3
+9.4
+9.5
+9.600000000000001
+9.700000000000001
+9.8
+9.9
+10.0
+
+    \end{Verbatim}
+
+    Við sjáum að það fást 0 stöður þegar
+\(p_2 \in [0, 3.7] \text{ } \cup [9.3, 100]\)
+
+    \subsection{Varðandi leit að núllstöðvum í Suggested Activity 2, 4 og
+5}\label{varuxf0andi-leit-auxf0-nuxfallstuxf6uxf0vum-uxed-suggested-activity-2-4-og-5}
+
+Í þessum þremur æfingum átti að finna núllstöðvar \(f(\theta)\) á bili
+\$ \theta \in[-\pi,\pi]\$. Fyrsta skrefið við að finna núllstöðvarnar
+var að plotta ferilinn fyrir öll \(\theta \in [-\pi, \pi]\). Í öllum
+æfingunum var ferilinn \(f(\theta)\) er mjög flatur í kringum
+\(f(\theta) = 0\), sem bendir til þess að villumögnunin (e. error
+magnification factor) sé mikil á þessu svæði. Þannig þó \(|f(\theta)|\)
+sé mjög lág tala fyrir eitthvað \(\theta\) þá getum við samt verið
+hlutfallslega mjög langt frá hinni réttu rót \(f(\theta)\). Því þarf
+sérstaklega að gæta þess að stop skilyrðið sé ekki of slakt við leit
+rótarinnar. Fallið fsolve
+
+    \subsection{Suggested Activity 8}\label{suggested-activity-8}
+
+\emph{Derive or look up the equations representing the forward
+kinematics of the three-dimensional, six-degrees-of-freedom Stewart
+platform. Write a Matlab program and demonstrate its use to solve the
+forward kinematics.}
+
+Verkefnið snýst um að hanna sex-leggja sviðspall. Til eru mismunandi
+lausnir á verkefninu.
+\href{https://www.youtube.com/watch?v=PIl8Epy9xIw\&t=34s}{Ein lausn} er
+þannig að hver leggur er í tveimur pörtum, báðir af fastri lengd, annar
+í snertingu við sviðspallinn, og hinn hluti hvers leggs snýst um sinn
+eigin snúningsöxul.
+\href{https://www.youtube.com/watch?v=PIl8Epy9xIw\&t=34s}{Önnur lausn}
+er þannig að leggirnir geta lengst, en upphafshæð þeirra er föst.
+
+Skoðum aðeins
+\href{https://www.researchgate.net/publication/2564027_Forward_Kinematics_of_a_Stewart_Platform_Mechanism}{verkefni}
+sem tekst á við seinni útgáfuna. Sá hluti verkefnisins sem snýr að
+framvirkri hreyfifræði (e. forward kinematics) snýst um að finna
+staðsetningu og halla sviðspallsins þegar lengdir leggjanna eru þekktar,
+svipað því sem er var gert í tvívíða þriggja-leggja verkefninu að ofan.
+Það er engin góð þekkt jafna til að leysa það verkefni, nema bara að
+finna núllstöðvar á jöfnu svipaðri og var gert að ofan, þ.e.a.s. fundin
+er bestunarlausn með reikniritum. Látum vigurinn
+\[\bar{t} = [t_x, t_y, t_z]\] tákna staðsetningu miðju sviðspallsins í
+þrívídd, og þá eru skilgreind þrjú snúningshorn pallsins
+\(\alpha, \beta, \gamma\) um \(x, y, z\) ásana. Svo eru leggirnir
+skilgreindir með sex vigrum af fastri lengd, og sex vigrar af
+breytilegri lengd (því leggirnir eru lengjanlegir) og staðsetningarhnit
+þeirra eru \[\bar{b_i} = [b_ix, b_iy, 0]\] og
+\[\bar{p_i} = [p_ix, p_iy, 0]\] fyrir \[i = 1,...,6\] \(z\)-hnitin eru
+öll \(0\) því reikningar miða við að grunnhnit leggjanna séu á jörðinni
+eða upphafspunkti z-áss. Nú er hægt að tákna lengdir leggjanna
+\(\bar{l_i} = -\bar{b_i} + \bar{t} + \underline{R}\cdot\bar{p_i}\) þar
+sem \$ \underline{R}\$ er snúningsfylki, reiknað út frá snúningshornunum
+þremur. Farið er nánar út í jöfnurnar á blaðsíðum 4,5 og 6 í verkefninu
+í hlekknum að ofan.
+
+Svo er staðsetning og halli sviðspallsins fyrir allar mismunandi lengdir
+leggjanna reiknaður og þar með hægt að kortleggja hreyfingu hans í
+þremur víddum.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

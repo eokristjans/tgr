@@ -2,10 +2,89 @@ import numpy as np
 import math
 import numpy.linalg as lin
 import matplotlib.pyplot as plt
+# from fractions import Fraction
+
+
+''''''''''''''''''''''''''''''''' Dæmablað 7 '''''''''''''''''''''''''''''''''
+''' 1. Forritið bæði klassíska og betrumbætta QR-þáttun  '''
+def classicGramSchmidt(AA):
+    A = np.array(AA, dtype=float)
+    n = len(A)
+    R = np.zeros([n,n], dtype=float)
+    Q = np.zeros([n,n], dtype=float)
+    for j in range(n):
+        y = A[j]
+        for i in range(j):
+            R[i][j] = np.dot(np.transpose(Q[i]),A[j])
+            y -= R[i][j]*Q[i]
+        R[j][j] = lin.norm(y)
+        Q[j] = y / R[j][j]
+    return (np.transpose(Q),R)
+
+A = [[4,0,3],[8,2,6],[1,-2,7]]
+B = classicGramSchmidt(A)
+print(np.transpose(np.array(A, dtype=float)))
+print(B[0])
+print(B[1])
+print((np.matmul(B[0],B[1])))
+
+''' Úttak
+[[ 4.  8.  1.]
+ [ 0.  2. -2.]
+ [ 3.  6.  7.]]
+[[ 0.8  0.  -0.6]
+ [ 0.   1.   0. ]
+ [ 0.6  0.   0.8]]
+[[ 5. 10.  5.]
+ [ 0.  2. -2.]
+ [ 0.  0.  5.]]
+[[ 4.  8.  1.]
+ [ 0.  2. -2.]
+ [ 3.  6.  7.]]
+'''
+
+
+def modifiedGramSchmidt(AA):
+    A = np.array(AA, dtype=float)
+    n = len(A)
+    R = np.zeros([n,n], dtype=float)
+    Q = np.zeros([n,n], dtype=float)
+    for j in range(n):
+        y = A[j]
+        for i in range(j):
+            R[i][j] = np.dot(np.transpose(Q[i]),y)
+            y -= R[i][j]*Q[i]
+        R[j][j] = lin.norm(y)
+        Q[j] = y / R[j][j]
+    return (np.transpose(Q),R)
+
+A = [[4,0,3],[8,2,6],[1,-2,7]]
+B = modifiedGramSchmidt(A)
+print(np.transpose(np.array(A, dtype=float)))
+print(B[0])
+print(B[1])
+print((np.matmul(B[0],B[1])))
+
+''' Úttak
+[[ 4.  8.  1.]
+ [ 0.  2. -2.]
+ [ 3.  6.  7.]]
+[[ 0.8  0.  -0.6]
+ [ 0.   1.   0. ]
+ [ 0.6  0.   0.8]]
+[[ 5. 10.  5.]
+ [ 0.  2. -2.]
+ [ 0.  0.  5.]]
+[[ 4.  8.  1.]
+ [ 0.  2. -2.]
+ [ 3.  6.  7.]]
+'''
+
+
+
 
 
 ''''''''''''''''''''''''''''''''' Dæmablað 6 '''''''''''''''''''''''''''''''''
-from fractions import Fraction
 
 chebyshev_bruunarpunktar = lambda j,n: np.cos((np.pi*(2*j-1))/(2*n))
 
