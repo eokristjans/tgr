@@ -133,7 +133,6 @@ f(0.9659258)
 ''' T.Gr. hd5-1
 Ekki alveg að virka rétt held ég... 
 Best að leysa þetta bara með aðferð úr stæ3 fyrst, ekki að ég muni þær lol
-
 def myI(n):
     I = []
     for i in range(n):
@@ -144,7 +143,6 @@ def myI(n):
             else:
                 I[i].append(0.0)
     return I
-
 Leysa u^3 - v^3 + u = 0, u^2+v^2 = 1 
 með x0=[1,1] og A0=B0=I
 með Newton og Broyden I og II
@@ -312,7 +310,6 @@ Computer the double precision computed solution, x_c.
 Find the 
     infinity norm (óendanlega normið) of the forward error and the error magnification factor of the problem Ax=b, 
 and compare it with the condition number of A: (a) n=6, (b) n = 10
-
 '''
 
 # Notkun:   (L,U) = LU(A)
@@ -500,7 +497,6 @@ Error Magnification Factor með LU þáttun: 2.381458363842625e-10
 Forward Error án LU þáttun: 4.4538306376296077e-10
 Backward Error án LU þáttun: 1.450087215836939e-16
 Error Magnification Factor án LU þáttun: 3071422.5937500005
-
 n = 10 gefur eftirfarnadi
 Ástandstala (condition number) með n=10 er: 131337064464496.02
 Forward Error með LU þáttún: 0.00032580806187954003
@@ -631,18 +627,15 @@ L:
 [1.0, 0.0, 0.0]
 [1.0, 1.0, 0.0]
 [0.5, 0.5, 1.0]
-
 U:
 [4.0, 2.0, 0.0]
 [0.0, 2.0, 2.0]
 [0.0, 0.0, 2.0]
-
 Forrit haetti keyrslu snemma. Getur ekki deilt med 0
 L:
 [1.0, 0.0, 0.0]
 [1.0, 1.0, 0.0]
 [0.5, 0.0, 1.0]
-
 U:
 [4.0, 2.0, 0.0]
 [0.0, 0.0, 2.0]
