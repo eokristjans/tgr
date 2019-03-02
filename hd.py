@@ -24,9 +24,12 @@ def classicGramSchmidt(AA):
 A = [[4,0,3],[8,2,6],[1,-2,7]]
 B = classicGramSchmidt(A)
 print(np.transpose(np.array(A, dtype=float)))
+print(A[0])
 print(B[0])
 print(B[1])
 print((np.matmul(B[0],B[1])))
+B[1][2][2] *=(-1)
+
 
 ''' Úttak
 [[ 4.  8.  1.]
@@ -42,6 +45,15 @@ print((np.matmul(B[0],B[1])))
  [ 0.  2. -2.]
  [ 3.  6.  7.]]
 '''
+
+
+A = [[2,1,2],[1,-1,1],[0,0,1]]
+lin.det(A)
+B = classicGramSchmidt(A)
+print(np.transpose(np.array(A, dtype=float)))
+print(B[0])
+print(B[1])
+print((np.matmul(B[0],B[1])))
 
 
 def modifiedGramSchmidt(AA):
