@@ -47,26 +47,6 @@ B[1][2][2] *=(-1)
 '''
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def modifiedGramSchmidt(AA):
     A = np.array(AA, dtype=float)
     n = len(A)
@@ -102,24 +82,6 @@ print((np.matmul(B[0],B[1])))
  [ 0.  2. -2.]
  [ 3.  6.  7.]]
 '''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
