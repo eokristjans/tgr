@@ -57,6 +57,16 @@ B[1][2][2] *=(-1)
 
 
 
+
+
+
+
+
+
+
+
+
+
 def modifiedGramSchmidt(AA):
     A = np.array(AA, dtype=float)
     n = len(A)
