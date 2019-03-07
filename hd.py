@@ -47,13 +47,14 @@ B[1][2][2] *=(-1)
 '''
 
 
-A = [[2,1,2],[1,-1,1],[0,0,1]]
-lin.det(A)
-B = classicGramSchmidt(A)
-print(np.transpose(np.array(A, dtype=float)))
-print(B[0])
-print(B[1])
-print((np.matmul(B[0],B[1])))
+
+
+
+
+
+
+
+
 
 
 def modifiedGramSchmidt(AA):
@@ -91,6 +92,22 @@ print((np.matmul(B[0],B[1])))
  [ 0.  2. -2.]
  [ 3.  6.  7.]]
 '''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
