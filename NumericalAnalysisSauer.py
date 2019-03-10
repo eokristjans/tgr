@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Projects, functions and notes 
-from Numerical Analysis 2nd ed, Sauer, Chapter 4 onwards
-
+from Numerical Analysis 2nd ed, Sauer, 
+Chapter 4 : Least Squares (Aðdferð minnstu kvaðrata), QR-factorization & more
+Chapter 5 : Numerical differentiation and integration
 
 @author: Erling Oskar
 """
@@ -12,6 +13,65 @@ import math
 import numpy.linalg as lin
 import matplotlib.pyplot as plt
 # from fractions import Fraction
+'''''''''''''''''''''''''''''''''  Chapter 5  '''''''''''''''''''''''''''''''''
+
+''' Composite Trapezoid Rule '''
+def compositeTrapezoidRule(f,d2f,a,b,m):
+    h = (b-a)/m
+    x = np.arange(a,b+h,h)
+    c = (b-a)/2 # or some other number between a and b
+#    Oh2 = (b-a)*h*h*d2f(c)/12
+    Oh2 = (b-a)*h*h*d2f(c)/12
+    ySum = 0
+    for i in range(1,m):
+        ySum += f(x[i])
+    ySum = ySum*2 + f(x[0]) + f(x[m])
+    return (0.5*h*ySum + Oh2)
+    
+
+
+ff = lambda x: (x**2+4)**(-0.5)
+d2ff = lambda x: 3*x**2*(x**2+4)**(-2.5)-(x**2+4)**(-1.5)
+aa = 0
+bb = 2*3**(0.5)
+mm = 16
+
+cTR = compositeTrapezoidRule(ff,d2ff,aa,bb,mm)
+
+
+
+''' Given Program. What does it do? 
+Estimates the difference between a numerical estimation of the derivative of 
+sin(x), and the actual value of dsin(x)/dx = cos(x) in point a. 
+The computer has problems subtracting floating point numbers of similar value 
+from each other, and so it may render a very large number.
+The computer also has problems dividing by very small numbers, so it may
+render very large numbers even if the actual limit as the denominator 
+approaches zero is zero.
+'''
+def hge1(a):
+    p=np.arange(-20,1)
+    f=lambda x: np.sin(x)
+    df=lambda x: np.cos(x)
+    err1,err2,err3=[],[],[]
+    for i in range(len(p)):
+        h=10.0**p[i]
+        err1+=[(f(a+h) - f(a-h))/(2*h)-df(a)]
+        err2+=[(f(a+h) - f(a))/h-df(a)]
+        h=2*h
+        err3+=[(f(a-h)-8*f(a-h/2)+8*f(a+h/2) - f(a+h))/(6*h)-df(a)]
+    plt.plot(p,np.log10(np.abs(err1)),'b')
+    plt.plot(p,np.log10(np.abs(err2)),'r')
+    plt.plot(p,np.log10(np.abs(err3)),'g')
+    plt.show()
+
+
+for i in range(-10,10):
+    print(i)
+    hge1(i)
+
+hge1(-100)
+
 
 '''''''''''''''''''''''''''''''''  Chapter 4  '''''''''''''''''''''''''''''''''
 ''' Implementation of Gauss-Newton Method which finds the point for which 
