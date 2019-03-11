@@ -9,18 +9,39 @@ Chapter 5 : Numerical differentiation and integration
 """
 
 import numpy as np 
-import math
 import numpy.linalg as lin
 import matplotlib.pyplot as plt
 # from fractions import Fraction
 '''''''''''''''''''''''''''''''''  Chapter 5  '''''''''''''''''''''''''''''''''
 
-''' Composite Trapezoid Rule '''
+
+''' Composite Simpson's Rule
+'''
+def compositeSimpsonsRule(f,d4f,a,b,m):
+    h = (b-a)/(2*m)
+    x = np.arange(a,b+h,h)
+    c = (b-a)/2 # or some other number between a and b
+    Oh4 = (b-a)*h**4*d4f(c)/180
+    ySum = 0
+    for i in range(1,m+1):
+        ySum += 4*f(x[2*i-1])
+    for i in range(1,m):
+        ySum += 2*f(x[2*i])
+    ySum = ySum + f(x[0]) + f(x[2*m])
+    return ( ySum*h/3 - Oh4 )
+
+
+''' Composite Trapezoid Rule 
+    Estimates the integral of f from a to b
+    f is a mathematical function that takes 1 parameter
+    d2f is the second derivative of f
+    a and b are the endpoints of the integral
+    m is the number of panels that [a,b] will be split into
+'''
 def compositeTrapezoidRule(f,d2f,a,b,m):
     h = (b-a)/m
     x = np.arange(a,b+h,h)
     c = (b-a)/2 # or some other number between a and b
-#    Oh2 = (b-a)*h*h*d2f(c)/12
     Oh2 = (b-a)*h*h*d2f(c)/12
     ySum = 0
     for i in range(1,m):
@@ -32,12 +53,42 @@ def compositeTrapezoidRule(f,d2f,a,b,m):
 
 ff = lambda x: (x**2+4)**(-0.5)
 d2ff = lambda x: 3*x**2*(x**2+4)**(-2.5)-(x**2+4)**(-1.5)
+d4ff = lambda x: ((2*x**2-4)/((x**2+4)**(5/2)))
 aa = 0
 bb = 2*3**(0.5)
 mm = 16
 
-cTR = compositeTrapezoidRule(ff,d2ff,aa,bb,mm)
+ff0 = lambda x: 0
+FF = lambda x: np.arcsinh(x/2)
 
+cTR = compositeTrapezoidRule(ff,d2ff,aa,bb,mm)
+cSR = compositeSimpsonsRule(ff,d4ff,aa,bb,mm)
+
+cTR0 = compositeTrapezoidRule(ff,ff0,aa,bb,mm)
+cSR0 = compositeSimpsonsRule(ff,ff0,aa,bb,mm)
+
+rettSvar = FF(bb) - FF(aa)
+skekkja = [np.abs(rettSvar-cTR), np.abs(rettSvar-cSR),
+           np.abs(rettSvar-cTR0), np.abs(rettSvar-cSR0)]
+
+print('Rétt lausn reiknuð með stofnfalli:', rettSvar)
+print()
+print('Áætlum c = (b-a)/2')
+print('Reiknuð með Samsettu Trapissureglunni:', cTR)
+print('Skekkjan er:', skekkja[0])
+print('Reiknuð með Samsettu Reglu Simpsons:', cSR)
+print('Skekkjan er:', skekkja[1])
+print()
+print('Án áæltaðar skekkju')
+print('Reiknuð með Samsettu Trapissureglunni:', cTR0)
+print('Skekkjan er:', skekkja[2])
+print('Reiknuð með Samsettu Reglu Simpsons:', cSR0)
+print('Skekkjan er:', skekkja[3])
+print()
+print('Minnsta skekkjan er:', min(skekkja), 'sem er aðferð númer',
+      (skekkja.index(min(skekkja))+1), 'af þeim sem við prófuðum' )
+print()
+print('Aðferð Simpson\'s án áætlaðrar skekkju gefur hér nákvæmasta niðurstöðu')
 
 
 ''' Given Program. What does it do? 
