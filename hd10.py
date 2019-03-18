@@ -1,5 +1,19 @@
 import math
 
+""" Dæmi 3 
+Adaptive Quadrature as given in Sauer uses the Trapezoid rule to define 
+S_[a,b] = 0.5*(b-a)(f(a)+f(b))
+Here we will use Simpson's rule
+Look better into pages 269-270 in the textbook
+
+I guess we'll basically need 
+
+
+"""
+def SimpsonAdaptiveQuadrature(f, x0, x2, tol):
+    x1 = 0.5*(x0+x2)
+
+""" Dæmi 1 """
 def RombergIntegration(f, a, b, n):
     R = [[]]
     h = (b-a)/2
