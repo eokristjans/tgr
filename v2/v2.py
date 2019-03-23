@@ -6,7 +6,6 @@ import numpy as np
 import time, timeit
 from sympy import *
 
-
 """ Suggested Activity 1 """
 
 # Used to make sqrt(dxdt^2 + dydt^2) to compute arc length
@@ -26,7 +25,6 @@ f_SA1 = SqrtOfFunctionsSquared(dxdt, dydt)
 ArcLength_SA1 = ComputeArcLengthTPR(f_SA1, 1)
 ArcLength_SA1
 
-
 """ Suggested Activity 2 """
 
 def tStarOfS(f, s):
@@ -45,8 +43,6 @@ print('The optimal value of t for ' + str(s2) + ' is ' + str(ts2))
 # We can verify that with:
 print('Verified:', (np.abs(ComputeArcLengthTPR(f_SA1, ts2) / 
                            ComputeArcLengthTPR(f_SA1, 1) - s2) < 0.001))
-
-
 
 """ Suggested Activity 3 """
 
@@ -83,20 +79,18 @@ for i in range(20):
     print('Proportional Arclength :', round(np.abs(arclength / 
                            ComputeArcLengthSR(f_SA1, 1)), 2))
     
-
-
 """ Suggested Activity 4 """
 def tStarOfS_SR_Newt(f, s):
     a = ComputeArcLengthSR(f, 1)
     g = lambda b: (s * a - ComputeArcLengthSR(f, b))
     return NewtonsMethod(g, 0, 1)
 
-# Need some crazy derivative to finish this one
-
 time0_SA4 = time.perf_counter()
 ts2_SA4 = tStarOfS_SR_Newt(f_SA1, s2)
 time0_SA4 = time.perf_counter() - time0_SA4
 
+print(ts2_SA4)
+print(ts2)
 print('The optimal value of t for ',s2, 
       ' is equal to the one from Suggest Activity 4:', (abs(ts2_SA4-ts2)<1e-5))
 print('Time required to compute t*(s) using the Trapezoid Rule and Newton\'s method',

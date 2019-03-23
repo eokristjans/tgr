@@ -5,7 +5,7 @@ Functions used in v2
 """
 import numpy as np
 from sympy import *
-
+from scipy.misc import derivative
 
 """ SA 1 """
 # the default tol gives correct to 8 decimal places
@@ -31,8 +31,6 @@ def _AdQuadTrapezoid(f, fa, fb, a, b, tol):
         return ( _AdQuadTrapezoid(f, fa, fc, a, c, tol/2) +
                 _AdQuadTrapezoid(f, fc, fb, c, b, tol/2) )
             
-        
-    
 # Possible useful
 def ThreePointCenteredDifferenceFormula(f, a=0, h=1e-10):
     return (f(a+h) - f(a-h))/(2*h)
@@ -48,10 +46,6 @@ def parDerivative(xt, yt):
     dxdt = lambdify(tS, xtPrime, 'numpy')
     dydt = lambdify(tS, ytPrime, 'numpy')
     return dxdt, dydt
-
-
-
-
 
 """ SA 2 """
 # Usage:    BisectionMethod(f,a,b)
@@ -100,17 +94,24 @@ def _AdQuadSimpson(f, a, fa, b, fb, tol, sab, c, fc):
     return (_AdQuadSimpson(f, a, fa, c, fc, tol/2, sac , lc, flc) +
            _AdQuadSimpson(f, c, fc, b, fb, tol/2, scb, rc, frc))
     
-
-
 """ SA 4 """
-#
-def NewtonsMethod(f, df, xold, tol=0.5e-4):
-    xnew = xold - f(xold)/df(xold)
+'''
+Computes f'(x) for given f(x)
+def funDerivative(f):
+    xS = Symbol('xS')
+    fPrime = f.diff(xS)
+    print("The derivative of f is: ", fPrime)
+    # Convert a derivative expression into lambda function
+    dfdx = lambdify(xS, fPrime, 'numpy')
+    return dfdx
+'''
+
+def NewtonsMethod(f, xold, tol=0.5e-4):
+    xnew = xold - f(xold)/derivative(f, xold, dx=1e-6)
     while abs(xnew-xold) > tol:
         xold = xnew
-        xnew = xold - f(xold)/df(xold)
+        xnew = xold - f(xold)/derivative(f, xold, dx=1e-6)
     return xnew
-
 
 
 """ Til að prófa Newton. Virkar MJÖG hratt.
