@@ -4,10 +4,11 @@ Functions used in v2
 @author: Erling Oskar
 """
 import numpy as np
+from sympy import *
 
 
 """ SA 1 """
-# tol gives correct to 8 decimal places+
+# the default tol gives correct to 8 decimal places
 # integral from t1=0 to t2=T
 def ComputeArcLengthTPR(f, T, t1=0, tol = 0.5e-8):
     return _AdaptiveIntegrationTPR(f, t1, T, tol)
@@ -35,6 +36,20 @@ def _AdQuadTrapezoid(f, fa, fb, a, b, tol):
 # Possible useful
 def ThreePointCenteredDifferenceFormula(f, a=0, h=1e-10):
     return (f(a+h) - f(a-h))/(2*h)
+
+# Computes x'(t) and y'(t) for given x(t) and y(t)
+def parDerivative(xt, yt):
+    tS = Symbol('tS')
+    xtPrime = xt.diff(tS)
+    ytPrime = yt.diff(tS)
+    print("The derivative of xt is: ", xtPrime)
+    print("The derivative of yt is: ", ytPrime)
+    # Convert derivative expressions into lambda functions
+    dxdt = lambdify(tS, xtPrime, 'numpy')
+    dydt = lambdify(tS, ytPrime, 'numpy')
+    return dxdt, dydt
+
+
 
 
 
