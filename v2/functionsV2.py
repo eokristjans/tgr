@@ -4,10 +4,11 @@ Functions used in v2
 @author: Erling Oskar
 """
 import numpy as np
-
+from sympy import *
+from scipy.misc import derivative
 
 """ SA 1 """
-# tol gives correct to 8 decimal places+
+# the default tol gives correct to 8 decimal places
 # integral from t1=0 to t2=T
 def ComputeArcLengthTPR(f, T, t1=0, tol = 0.5e-8):
     return _AdaptiveIntegrationTPR(f, t1, T, tol)
@@ -30,13 +31,21 @@ def _AdQuadTrapezoid(f, fa, fb, a, b, tol):
         return ( _AdQuadTrapezoid(f, fa, fc, a, c, tol/2) +
                 _AdQuadTrapezoid(f, fc, fb, c, b, tol/2) )
             
-        
-    
 # Possible useful
 def ThreePointCenteredDifferenceFormula(f, a=0, h=1e-10):
     return (f(a+h) - f(a-h))/(2*h)
 
-
+# Computes x'(t) and y'(t) for given x(t) and y(t)
+def parDerivative(xt, yt):
+    tS = Symbol('tS')
+    xtPrime = xt.diff(tS)
+    ytPrime = yt.diff(tS)
+    print("The derivative of xt is: ", xtPrime)
+    print("The derivative of yt is: ", ytPrime)
+    # Convert derivative expressions into lambda functions
+    dxdt = lambdify(tS, xtPrime, 'numpy')
+    dydt = lambdify(tS, ytPrime, 'numpy')
+    return dxdt, dydt
 
 """ SA 2 """
 # Usage:    BisectionMethod(f,a,b)
@@ -85,17 +94,24 @@ def _AdQuadSimpson(f, a, fa, b, fb, tol, sab, c, fc):
     return (_AdQuadSimpson(f, a, fa, c, fc, tol/2, sac , lc, flc) +
            _AdQuadSimpson(f, c, fc, b, fb, tol/2, scb, rc, frc))
     
-
-
 """ SA 4 """
-#
-def NewtonsMethod(f, df, xold, tol=0.5e-4):
-    xnew = xold - f(xold)/df(xold)
+'''
+Computes f'(x) for given f(x)
+def funDerivative(f):
+    xS = Symbol('xS')
+    fPrime = f.diff(xS)
+    print("The derivative of f is: ", fPrime)
+    # Convert a derivative expression into lambda function
+    dfdx = lambdify(xS, fPrime, 'numpy')
+    return dfdx
+'''
+
+def NewtonsMethod(f, xold, tol=0.5e-4):
+    xnew = xold - f(xold)/derivative(f, xold, dx=1e-6)
     while abs(xnew-xold) > tol:
         xold = xnew
-        xnew = xold - f(xold)/df(xold)
+        xnew = xold - f(xold)/derivative(f, xold, dx=1e-6)
     return xnew
-
 
 
 """ Til að prófa Newton. Virkar MJÖG hratt.
