@@ -4,6 +4,24 @@ Functions used in v2
 @author: Erling Oskar
 """
 import numpy as np
+import matplotlib.pyplot as plt
+from time import perf_counter
+
+
+    
+""" Plots many sections of a curve on one plot """
+def plotParameterizedCurves(x, y, ts, n, header):
+    fig, axis = plt.subplots()
+    for i in range(n):
+        t = np.arange(ts[i], ts[i+1], 0.001)
+        axis.plot(x(t), y(t))
+    axis.set(xlabel='x(t)', ylabel='y(t)',title=header)
+    plt.yticks(np.arange(0,2.5,0.5))
+    plt.xticks(np.arange(-1,1.5,0.5))
+    axis.axhline(y=0, color='k')
+    axis.axvline(x=0, color='k')
+    axis.grid()
+  
 
 """ SA 1 """
 # Returns the lamda function sqrt(dxdt(t)^2 + dydt(t)^2)
@@ -80,12 +98,14 @@ def adQuadSimpson(f, a, b, tol, c=0):
 """ SA 4 """
 
 def newtonsMethod(f, xold, tol):
-    xold = 0.8
+#    start = perf_counter()
     dfdt = threePointCentDiff(f)
     xnew = xold - f(xold)/dfdt(xold)
     while abs(xnew-xold) > tol:
         xold = xnew
         xnew = xold - f(xold)/dfdt(xold)
+#    end = perf_counter()
+#    print('it took', end-start, 'time to compute', xnew)
     return xnew
 
 def tStarOfSNewton(f, s, intMethod, xold, tol):
