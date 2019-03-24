@@ -13,6 +13,41 @@ import matplotlib.pyplot as plt
 
 
 '''''''''''''''''''''''''''''''''  Chapter 6  '''''''''''''''''''''''''''''''''
+# Runge-Kutta 4 Good iterative solver for Ordinary Differential Equations
+def RK4(f, t, w, h):
+    g = h/2
+    s1 = f(t,w)
+    s2 = f(t+g, w+g*s1)
+    s3 = f(t+g, w+g*s2)
+    s4 = f(t+h, w+h*s3)
+    return (t+h, w + h*(s1+2*(s2+s3)+s4)/6)
+    
+
+f = lambda t,y: t*y + t**3
+y0 = 1
+h=0.2
+t=0
+
+w = y0
+for i in range(5):
+    t, w = RK4(f, t, w, h)
+    print(t, w)
+    
+""" Output:
+0.2 1.0206033466666666
+0.4 1.089858524300753
+0.6 1.2316459785404794
+0.8 1.4913713892289726
+1.0 1.9461400240300424
+"""
+
+
+
+
+
+
+
+
 def ExplicitTrapezoidMethod(f, y0, h, k, t0=0):
     t = t0
     wCurr = y0
