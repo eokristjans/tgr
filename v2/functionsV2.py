@@ -55,6 +55,7 @@ def bisectionMethod(f,a,b,tol):
             fa=fc
     return c
 
+# intMethod: Integration Method
 def tStarOfSBisect(f, s, intMethod, tol):
     a = compArcLength(f, 0.0, 1.0, intMethod, tol)
     g = lambda b: (s * a - compArcLength(f, 0.0, b, intMethod, tol))
