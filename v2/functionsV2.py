@@ -27,8 +27,6 @@ def adQuad(f, a, b, tol):
     S_ab = (h/2)*(f(a)+f(b))
     S_ac = (h/4)*(f(a)+f(c))
     S_cb = (h/4)*(f(c)+f(b))
-    print("Tol er ", tol)
-    print(np.abs(S_ab - S_cb - S_ac))
     if np.abs(S_ab - S_cb - S_ac) < 3*tol: #  and h < 1e-2
         return (S_ac + S_cb)
     else:
