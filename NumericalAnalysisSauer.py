@@ -6,15 +6,65 @@ Chapter 4 : Least Squares (Aðdferð minnstu kvaðrata), QR-factorization & more
 Chapter 5 : Numerical differentiation and integration
 
 @author: Erling Oskar
-"""
-
-import numpy as np 
+"""import numpy as np 
 import numpy.linalg as lin
 import matplotlib.pyplot as plt
 # from fractions import Fraction
+
+
+'''''''''''''''''''''''''''''''''  Chapter 6  '''''''''''''''''''''''''''''''''
+def ExplicitTrapezoidMethod(f, y0, h, k, t0=0):
+    t = t0
+    wCurr = y0
+    for i in range(k):
+        ftw = f(t,wCurr)
+        t +=h
+        wTilda = wCurr + h*ftw
+        wNext = wCurr + 0.5*h*(ftw + f(t,wTilda))
+        wCurr = wNext
+        print('w['+str(i+1)+'] =', wCurr)
+    return wCurr
+
+
+kk = 4
+hh = 0.25
+
+f_1a = lambda t,y: 2*(t+1)*y
+y0_1a = 1
+ans_1a = ExplicitTrapezoidMethod(f_1a, y0_1a, hh, kk)
+""" Output:
+w[1] = 1.71875
+w[2] = 3.30322265625
+w[3] = 7.070960998535156
+w[4] = 16.793532371520996
+"""
+
+f_1b = lambda t,y: t**3/y**2
+y0_1b = 1
+ans_1b = ExplicitTrapezoidMethod(f_1b, y0_1b, hh, kk)
+""" Output:
+w[1] = 1.001953125
+w[2] = 1.019342601468375
+w[3] = 1.0822649536177262
+w[4] = 1.2182419316985125
+"""
+
+f_2b = lambda t,x: (2*t-2)*x
+y0_2b = 1
+ans_2b = ExplicitTrapezoidMethod(f_2b, y0_2b, hh, kk)
+""" Output:
+w[1] = 0.65625
+w[2] = 0.48193359375
+w[3] = 0.39910125732421875
+w[4] = 0.3741574287414551
+"""
+
+
+
+
+
+
 '''''''''''''''''''''''''''''''''  Chapter 5  '''''''''''''''''''''''''''''''''
-
-
 ''' Composite Simpson's Rule
 '''
 def compositeSimpsonsRule(f,d4f,a,b,m):
