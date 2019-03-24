@@ -3,49 +3,39 @@
 Functions used in v2
 @author: Erling Oskar
 """
-import numpy as np
-from sympy import *
-from scipy.misc import derivative
+# To install autograd run pip install autograd
+# Note: pylint incorrectly gives errors on 
+# the autograd.numpy module and grad function
+import autograd.numpy as np
+from autograd import *
 
 """ SA 1 """
-# the default tol gives correct to 8 decimal places
-# integral from t1=0 to t2=T
-def ComputeArcLengthTPR(f, T, t1=0, tol = 0.5e-8):
-    return _AdaptiveIntegrationTPR(f, t1, T, tol)
+# Returns the lamda function sqrt(dxdt(t)^2 + dydt(t)^2)
+# given x(t) and y(t)
+def sqrtFunSquared(x, y):
+    dxdt = grad(x)
+    dydt = grad(y)
+    return lambda t: np.sqrt(dxdt(t)^2 + dydt(t)^2)
 
-# Just a function that calls another function
-def _AdaptiveIntegrationTPR(f, a, b, tol):
-    return _AdQuadTrapezoid(f, f(a), f(b), a, b, tol)
+# Computes the arc length for a given function (f)
+# and tolerance (tol), from t = 0 to t = T
+# with a given method of integration. 
+def compArcLength(f, T, intMethod, tol = 0.5e-8):
+    return intMethod(f, 0, T, tol)
 
-# Computes the AdaptiveQuadrature
-def _AdQuadTrapezoid(f, fa, fb, a, b, tol):
+# Computes the definite integral of a given function (f)
+# from a to b using the method of Adaptive Quadrature
+def adQuad(f, a, b, tol):
     c = (a+b)/2
     h = b-a
-    fc = f(c)
-    S_ab = (h/2)*(fa+fb)
-    S_ac = (h/4)*(fa+fc)
-    S_cb = (h/4)*(fc+fb)
+    S_ab = (h/2)*(f(a)+f(b))
+    S_ac = (h/4)*(f(a)+f(c))
+    S_cb = (h/4)*(f(c)+f(b))
     if np.abs(S_ab - S_cb - S_ac) < 3*tol: #  and h < 1e-2
         return (S_ac + S_cb)
     else:
-        return ( _AdQuadTrapezoid(f, fa, fc, a, c, tol/2) +
-                _AdQuadTrapezoid(f, fc, fb, c, b, tol/2) )
-            
-# Possible useful
-def ThreePointCenteredDifferenceFormula(f, a=0, h=1e-10):
-    return (f(a+h) - f(a-h))/(2*h)
-
-# Computes x'(t) and y'(t) for given x(t) and y(t)
-def parDerivative(xt, yt):
-    tS = Symbol('tS')
-    xtPrime = xt.diff(tS)
-    ytPrime = yt.diff(tS)
-    print("The derivative of xt is: ", xtPrime)
-    print("The derivative of yt is: ", ytPrime)
-    # Convert derivative expressions into lambda functions
-    dxdt = lambdify(tS, xtPrime, 'numpy')
-    dydt = lambdify(tS, ytPrime, 'numpy')
-    return dxdt, dydt
+        return (adQuad(f, a, c, tol/2) +
+                adQuad(f, c, b, tol/2))
 
 """ SA 2 """
 # Usage:    BisectionMethod(f,a,b)
@@ -53,7 +43,7 @@ def parDerivative(xt, yt):
 #           a < b are numbers such that f(a)*f(b) < 0
 #           tol is a number
 # Post:     c is the root of f, i.e f(c) = 0
-def BisectionMethod(f,a,b,tol=0.5e-6):
+def bisectionMethod(f,a,b,tol=0.5e-6):
     fa=f(a)
     fb=f(b)
     while (b-a)/2 > tol:
@@ -67,61 +57,40 @@ def BisectionMethod(f,a,b,tol=0.5e-6):
             fa=fc
     return c
 
-
+def tStarOfS(f, s, intMethod, rootMethod):
+    a = compArcLength(f, 1, intMethod)
+    g = lambda b: (s * a - compArcLength(f, b, intMethod))
+    return rootMethod(g, 0, 1)
 
 """ SA 3 """
-def ComputeArcLengthSR(f, T, t1=0, tol = 0.5e-8):
-    return _AdaptiveIntegrationSR(f, t1, T, tol)
+def computeArcLengthSR(f, T, t1=0, tol = 0.5e-8):
+    return adQuadSimpson(f, t1, T, tol)
 
-def _AdaptiveIntegrationSR(f, a, b, tol):
-    fa = f(a)
-    fb = f(b)
-    c, fc, sab = _SimpsonsRule(f, a, fa, b, fb)
-    return _AdQuadSimpson(f, a, fa, b, fb, tol, sab, c, fc)
-
-def _SimpsonsRule(f, a, fa, b, fb):
+def simpsonsRule(f, a, b):
     h = (b-a)/6
     c = (a+b)/2
-    fc = f(c)
-    return (c, fc, h * (fa + 4 * fc + fb))
+    return (c, h * (f(a) + 4 * f(c) + f(b)))
 
-def _AdQuadSimpson(f, a, fa, b, fb, tol, sab, c, fc):
+def _adaptiveIntegrationSR(f, a, b, tol):
+    
+    return adQuadSimpson(f, a, fa, b, fb, tol, sab, c, fc)
+
+def adQuadSimpson(f, a, b, tol, c):
+    c, sab = simpsonsRule(f, a, b)
     h = (b-a)/6
-    lc, flc, sac  = _SimpsonsRule(f, a, fa, c, fc)
-    rc, frc, scb = _SimpsonsRule(f, c, fc, b, fb)
+    lc, flc, sac  = simpsonsRule(f, a, c)
+    rc, frc, scb = simpsonsRule(f, c, b)
     if abs(sab - sac - scb) < 15*tol: #  and h < 1e-1
         return sac + scb
-    return (_AdQuadSimpson(f, a, fa, c, fc, tol/2, sac , lc, flc) +
-           _AdQuadSimpson(f, c, fc, b, fb, tol/2, scb, rc, frc))
+    return (adQuadSimpson(f, a, c, tol, sac, lc, flc) +
+           adQuadSimpson(f, c, b, tol, scb, rc, frc))
+
     
 """ SA 4 """
-'''
-Computes f'(x) for given f(x)
-def funDerivative(f):
-    xS = Symbol('xS')
-    fPrime = f.diff(xS)
-    print("The derivative of f is: ", fPrime)
-    # Convert a derivative expression into lambda function
-    dfdx = lambdify(xS, fPrime, 'numpy')
-    return dfdx
-'''
-
-def NewtonsMethod(f, xold, tol=0.5e-4):
-    xnew = xold - f(xold)/derivative(f, xold, dx=1e-6)
+def newtonsMethod(f, xold, tol=0.5e-4):
+    dfdt = grad(f)
+    xnew = xold - f(xold)/dfdt(xold)
     while abs(xnew-xold) > tol:
         xold = xnew
-        xnew = xold - f(xold)/derivative(f, xold, dx=1e-6)
+        xnew = xold - f(xold)/dfdt(xold)
     return xnew
-
-
-""" Til að prófa Newton. Virkar MJÖG hratt.
-fx = lambda x: x**3 + x - 1
-dfdx = lambda x: 3*x**2 + 1
-ans = NewtonsMethod(fx, dfdx, -0.7)
-"""
-
-
-
-
-
-

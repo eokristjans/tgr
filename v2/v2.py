@@ -1,42 +1,31 @@
 # -*- coding: utf-8 -*-
-
-from functionsV2 import ComputeArcLengthTPR, BisectionMethod, ComputeArcLengthSR
-from functionsV2 import NewtonsMethod, parDerivative
+from functionsV2 import *
 import numpy as np
 import time, timeit
-from sympy import *
 
 """ Suggested Activity 1 """
+# Given parametric path with
+# x - coordinates x(t) and 
+# y - coordinates y(t)
+x = lambda t: 0.5 + 0.3*t + 3.9*t**2 - 4.7*t**3
+y = lambda t: 1.5 + 0.3*t + 0.9*t**2 - 2.7*t**3
 
-# Used to make sqrt(dxdt^2 + dydt^2) to compute arc length
-def SqrtOfFunctionsSquared(x,y):
-    return lambda t: np.sqrt(x(t)**2 + y(t)**2)
-    
-# Partial Derivatives for the given parametric path
-tS = Symbol('tS')
-xt = 0.5 + 0.3*tS + 3.9*tS**2 - 4.7*tS**3
-yt = 1.5 + 0.3*tS + 0.9*tS**2 - 2.7*tS**3
-dxdt, dydt = parDerivative(xt, yt)
+# Compute the lambda function that
+# is to be integrgated
+f1 = sqrtFunSquared(x, y)
 
-# dxdt = lambda t: 0.3 + 7.8*t - 14.1*t**2
-# dydt = lambda t: 0.3 + 1.8*t - 8.1*t**2
-f_SA1 = SqrtOfFunctionsSquared(dxdt, dydt)
-
-ArcLength_SA1 = ComputeArcLengthTPR(f_SA1, 1)
-ArcLength_SA1
+# Compute the corresponding arc length
+# by computing the integral of f1 from
+# 0 to 1 using the method of Adaptive Quadrature
+arcLength1 = compArcLength(f1, 1, adQuad)
 
 """ Suggested Activity 2 """
 
-def tStarOfS(f, s):
-    a = ComputeArcLengthTPR(f, 1)
-    g = lambda b: (s * a - ComputeArcLengthTPR(f, b))
-    return BisectionMethod(g, 0, 1)
-
-
 s2 = 0.5
-time_SA2 = time.perf_counter()
-ts2 = tStarOfS(f_SA1, s2)
-time_SA2 = time.perf_counter() - time_SA2
+start = time.perf_counter()
+ts2 = tStarOfS(f1, s2, adQuad, bisectionMethod)
+end = time.perf_counter()
+time2 = end - start
 
 print('The optimal value of t for ' + str(s2) + ' is ' + str(ts2))
 
