@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 from functionsV2 import *
-<<<<<<< HEAD
 import autograd.numpy as np
-=======
-import numpy as np
->>>>>>> lessFun
 import time, timeit
 
 """ Suggested Activity 1 """
@@ -16,9 +12,9 @@ y = lambda t: 1.5 + 0.3*t + 0.9*t**2 - 2.7*t**3
 
 # Compute the lambda function that
 # is to be integrgated
-<<<<<<< HEAD
 f = sqrtFunSquared(x, y)
-
+print(f(1.0))
+'''
 # Compute the corresponding arc length
 # by computing the integral of f from
 # 0 to 1 using the method of Adaptive Quadrature
@@ -42,28 +38,6 @@ print('and was computed in', time, " seconds")
 # root of the function 
 print('Verified:', (np.abs(compArcLength(f, tStar, adQuad) / 
                            compArcLength(f, 1, adQuad) - s) < 0.001))
-=======
-f1 = sqrtFunSquared(x, y)
-
-# Compute the corresponding arc length
-# by computing the integral of f1 from
-# 0 to 1 using the method of Adaptive Quadrature
-arcLength1 = compArcLength(f1, 1, adQuad)
-
-""" Suggested Activity 2 """
-
-s2 = 0.5
-start = time.perf_counter()
-ts2 = tStarOfS(f1, s2, adQuad, bisectionMethod)
-end = time.perf_counter()
-time2 = end - start
-
-print('The optimal value of t for ' + str(s2) + ' is ' + str(ts2))
-
-# We can verify that with:
-print('Verified:', (np.abs(ComputeArcLengthTPR(f_SA1, ts2) / 
-                           ComputeArcLengthTPR(f_SA1, 1) - s2) < 0.001))
->>>>>>> lessFun
 
 """ Suggested Activity 3 """
 # For n = 4
@@ -82,7 +56,7 @@ for i in range(len(sArray)):
     print('is:', round(arclength,2), end='')
     print('Proportional arc length :', end='')
     print(round(np.abs(arclength / compArcLength(f, 1, adQuadSimpson)), 2))
-'''
+
 # For n = 20
 sArray = np.arange(0.00, 1.05, 0.05)
 time_SA3_n20 = time.perf_counter()
