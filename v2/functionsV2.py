@@ -55,10 +55,10 @@ def bisectionMethod(f,a,b,tol):
             fa=fc
     return c
 
-def tStarOfS(f, s, intMethod, rootMethod, tol):
+def tStarOfSBisect(f, s, intMethod, tol):
     a = compArcLength(f, 0.0, 1.0, intMethod, tol)
     g = lambda b: (s * a - compArcLength(f, 0.0, b, intMethod, tol))
-    return rootMethod(g, 0.0, 1.0, tol)
+    return bisectionMethod(g, 0.0, 1.0, tol)
 
 """ SA 3 """
 def simpsonsRule(f, a, b):
@@ -78,12 +78,16 @@ def adQuadSimpson(f, a, b, tol, c=0):
     
 """ SA 4 """
 
-'''
 def newtonsMethod(f, xold, tol):
+    xold = 0.8
     dfdt = threePointCentDiff(f)
     xnew = xold - f(xold)/dfdt(xold)
     while abs(xnew-xold) > tol:
         xold = xnew
         xnew = xold - f(xold)/dfdt(xold)
     return xnew
-'''
+
+def tStarOfSNewton(f, s, intMethod, xold, tol):
+    a = compArcLength(f, 0.0, 1.0, intMethod, tol)
+    g = lambda b: (s * a - compArcLength(f, 0.0, b, intMethod, tol))
+    return newtonsMethod(g, xold, tol)
