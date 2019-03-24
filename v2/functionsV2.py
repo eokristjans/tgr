@@ -15,7 +15,11 @@ from autograd import *
 def sqrtFunSquared(x, y):
     dxdt = grad(x)
     dydt = grad(y)
+<<<<<<< HEAD
+    return lambda t: np.sqrt(dxdt(t)**2 + dydt(t)**2)
+=======
     return lambda t: np.sqrt(dxdt(t)^2 + dydt(t)^2)
+>>>>>>> lessFun
 
 # Computes the arc length for a given function (f)
 # and tolerance (tol), from t = 0 to t = T
@@ -63,14 +67,28 @@ def tStarOfS(f, s, intMethod, rootMethod):
     return rootMethod(g, 0, 1)
 
 """ SA 3 """
+<<<<<<< HEAD
+=======
 def computeArcLengthSR(f, T, t1=0, tol = 0.5e-8):
     return adQuadSimpson(f, t1, T, tol)
 
+>>>>>>> lessFun
 def simpsonsRule(f, a, b):
     h = (b-a)/6
     c = (a+b)/2
     return (c, h * (f(a) + 4 * f(c) + f(b)))
 
+<<<<<<< HEAD
+def adQuadSimpson(f, a, b, tol = 0.5e-8, c=None):
+    c, sab = simpsonsRule(f, a, b)
+    h = (b-a)/6
+    lc, sac  = simpsonsRule(f, a, c)
+    rc, scb = simpsonsRule(f, c, b)
+    if abs(sab - sac - scb) < 15*tol: #  and h < 1e-1
+        return sac + scb
+    return (adQuadSimpson(f, a, c, tol, lc) +
+           adQuadSimpson(f, c, b, tol, rc))
+=======
 def _adaptiveIntegrationSR(f, a, b, tol):
     
     return adQuadSimpson(f, a, fa, b, fb, tol, sab, c, fc)
@@ -85,6 +103,7 @@ def adQuadSimpson(f, a, b, tol, c):
     return (adQuadSimpson(f, a, c, tol, sac, lc, flc) +
            adQuadSimpson(f, c, b, tol, scb, rc, frc))
 
+>>>>>>> lessFun
     
 """ SA 4 """
 def newtonsMethod(f, xold, tol=0.5e-4):

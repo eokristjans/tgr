@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from functionsV2 import *
+<<<<<<< HEAD
+import autograd.numpy as np
+=======
 import numpy as np
+>>>>>>> lessFun
 import time, timeit
 
 """ Suggested Activity 1 """
@@ -12,6 +16,33 @@ y = lambda t: 1.5 + 0.3*t + 0.9*t**2 - 2.7*t**3
 
 # Compute the lambda function that
 # is to be integrgated
+<<<<<<< HEAD
+f = sqrtFunSquared(x, y)
+
+# Compute the corresponding arc length
+# by computing the integral of f from
+# 0 to 1 using the method of Adaptive Quadrature
+arcLength = compArcLength(f, 1.0, adQuad)
+
+print("The arc length is", arcLength)
+
+""" Suggested Activity 2 """
+# Let's time the function tStarOfS
+# for s = 0.5 
+s = 0.5
+start = time.perf_counter()
+tStar = tStarOfS(f, s, adQuad, bisectionMethod)
+end = time.perf_counter()
+time = end - start
+
+print('The optimal value of t for ' + str(s) + ' is ' + str(tStar))
+print('and was computed in', time, " seconds")
+
+# Let's verify if tStar really is the
+# root of the function 
+print('Verified:', (np.abs(compArcLength(f, tStar, adQuad) / 
+                           compArcLength(f, 1, adQuad) - s) < 0.001))
+=======
 f1 = sqrtFunSquared(x, y)
 
 # Compute the corresponding arc length
@@ -32,31 +63,28 @@ print('The optimal value of t for ' + str(s2) + ' is ' + str(ts2))
 # We can verify that with:
 print('Verified:', (np.abs(ComputeArcLengthTPR(f_SA1, ts2) / 
                            ComputeArcLengthTPR(f_SA1, 1) - s2) < 0.001))
+>>>>>>> lessFun
 
 """ Suggested Activity 3 """
+# For n = 4
+sArray = [0.0, 0.25, 0.5, 0.75, 1.0]
 
-def tStarOfS_SR(f, s):
-    a = ComputeArcLengthSR(f, 1)
-    g = lambda b: (s * a - ComputeArcLengthSR(f, b))
-    return BisectionMethod(g, 0, 1)
+# Time the
+start = time.perf_counter()
+tStarArray = [tStarOfS(f, s, adQuadSimpson, bisectionMethod) for s in sArray]
+end = time.perf_counter()
+time = end - start 
 
-# For n=4
-s3n4 = [0.0, 0.25, 0.5, 0.75, 1.0]
-
-time_SA3_n4 = time.perf_counter()
-ts3n4 = [tStarOfS_SR(f_SA1, s) for s in s3n4]
-time_SA3_n4 = time.perf_counter() - time_SA3_n4
-
-print("SA3, n = 4")
-for i in range(4):
-    arclength = ComputeArcLengthSR(f_SA1, ts3n4[i+1], ts3n4[i])
-    print('Arclength from', ts3n4[i], ' to ', round(ts3n4[i+1],2), 'is:', round(arclength,2))
-    print('Proportional Arclength :', round(np.abs(arclength / 
-                           ComputeArcLengthSR(f_SA1, 1)), 2))
-
-# For n=20
-s3n20 = np.arange(0.00,1.05,0.05)
-
+for i in range(len(sArray)):
+    arclength = compArcLength(f, tStarArray[i+1], tStarArray[i])
+    print('Arclength from', round(tStarArray[i]), end='')
+    print(' to ', round(tStarArray[i+1],2), end='') 
+    print('is:', round(arclength,2), end='')
+    print('Proportional arc length :', end='')
+    print(round(np.abs(arclength / compArcLength(f, 1, adQuadSimpson)), 2))
+'''
+# For n = 20
+sArray = np.arange(0.00, 1.05, 0.05)
 time_SA3_n20 = time.perf_counter()
 ts3n20 = [tStarOfS_SR(f_SA1, s) for s in s3n20]
 time_SA3_n20 = time.perf_counter() - time_SA3_n20
@@ -92,3 +120,4 @@ time0_SA4
 
 ts2_SA4
 ts2
+'''

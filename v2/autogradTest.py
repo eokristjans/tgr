@@ -12,3 +12,8 @@ def taylor_sine(x):  # Taylor approximation to sine function
 
 grad_sine = grad(taylor_sine)
 print("Gradient of sin(pi) is", grad_sine(np.pi))
+<<<<<<< HEAD
+print("Hello", end='')
+print(" World",)
+=======
+>>>>>>> lessFun
