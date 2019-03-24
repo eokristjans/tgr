@@ -7,10 +7,8 @@ import numpy as np
 
 """ SA 1 """
 # Returns the lamda function sqrt(dxdt(t)^2 + dydt(t)^2)
-# given x(t) and y(t)
-def sqrtFunSquared(x, y, diffMethod):
-    dxdt = diffMethod(x)
-    dydt = diffMethod(y)
+# given dxdt(t) and dydt(t)
+def sqrtFunSquared(dxdt, dydt):
     return lambda t: np.sqrt(dxdt(t)**2 + dydt(t)**2)
 
 # Computes the arc length for a given function (f)
