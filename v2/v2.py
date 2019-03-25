@@ -3,6 +3,7 @@ from functionsV2 import *
 import numpy as np
 import matplotlib.pyplot as plt
 from time import perf_counter
+from random import uniform
 
 # Temporary global tol
 tol = 0.5e-5
@@ -54,7 +55,8 @@ sArray_n4 = [0.0, 0.25, 0.5, 0.75, 1.0]
 n = 4
 
 start = perf_counter()
-tStarArray = [tStarOfSBisect(f, s, adQuadSimpson, tol) for s in sArray_n4]
+for i in range(n):
+    tStarArray[i+1] = tStarOfSBisect(f, sArray_n4[i+1], adQuadSimpson, tol)
 end = perf_counter()
 elapsedTime3n4 = end - start
 print("For n = 4 the computation of t*(s) took",
@@ -95,9 +97,11 @@ for i in range(n): # let's verify that each arclength is about one-twentieth of 
 
 plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve Equipartitioned into 20 subpaths")
 
+
+
 """ Suggested Activity 4 """
-start = perf_counter()
-tStar4 = tStarOfSNewton(f, s, adQuad, 0, tol)
+start = perf_counter() # Newt takes 12 times longer with initial guess of 0.0 than with 0.8
+tStar4 = tStarOfSNewton(f, s, adQuad, 0.8, tol)
 end = perf_counter()
 elapsedTime4 = end - start
 
@@ -114,12 +118,11 @@ print('Time required to compute t*(s) using the Bisection method is:',
             round(elapsedTime2, dec+2), "seconds")
 
 
-
 # For n = 4
 n = 4
 tStarArray = np.zeros(n+1)
 start = perf_counter()
-for i in range(n): # let's verify that each arclength is about a quarter of the length of the path
+for i in range(n):
     tStarArray[i+1] = tStarOfSNewton(f, sArray_n4[i+1], adQuadSimpson, tStarArray[i], tol)
 end = perf_counter()
 elapsedTime4n4 = end - start
@@ -128,7 +131,7 @@ print("For n = 4, using Newton's method, the computation of t*(s) took",
 print("For n = 4, using the Bisection method, the computation of t*(s) took",
       round(elapsedTime3n4, dec), "seconds")
 
-for i in range(n):
+for i in range(n): # let's verify that each arclength is about a quarter of the length of the path
     partialArclength = compArcLength(f, tStarArray[i], tStarArray[i+1], adQuadSimpson, tol)
     if abs(partialArclength / arcLength - 1/n) > 10*tol:
         print('Arc length from', round(tStarArray[i], dec), end=' ')
@@ -136,15 +139,15 @@ for i in range(n):
         print('is', round(partialArclength, dec))
         print('Proportional arc length:',
               round(np.abs(partialArclength / arcLength), dec))
-    
 
 plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve Equipartitioned into 4 subpaths")
-    
+
+
 # For n = 20
 n = 20
 tStarArray = np.zeros(n+1)
 start = perf_counter()
-for i in range(n): # let's verify that each arclength is about a quarter of the length of the path
+for i in range(n):
     tStarArray[i+1] = tStarOfSNewton(f, sArray_n20[i+1], adQuadSimpson, tStarArray[i], tol)
 end = perf_counter()
 elapsedTime4n20 = end - start
@@ -154,12 +157,24 @@ print("For n = 20, using the Bisection method, the computation of t*(s) took",
       round(elapsedTime3n20, dec), "seconds")
 
 
-for i in range(n):
-    arclength = compArcLength(f, tStarArray[i], tStarArray[i+1], adQuadSimpson, tol)
-    print('Arclength from', round(tStarArray[i], dec), end='')
-    print(' to', round(tStarArray[i+1], dec), end=' ') 
-    print('is:', round(arclength, dec))
-    print('Proportional Arclength :', round(np.abs(arclength / 
-                           compArcLength(f, 0.0, 1.0, adQuadSimpson, tol)), 2))
+for i in range(n): # let's verify that each arclength is about one-twentieth of the length of the path
+    partialArclength = compArcLength(f, tStarArray[i], tStarArray[i+1], adQuadSimpson, tol)
+    if abs(partialArclength / arcLength - 1/n) > 10*tol:
+        print('Arc length from', round(tStarArray[i], dec), end=' ')
+        print('to', round(tStarArray[i+1], dec), end=' ') 
+        print('is', round(partialArclength, dec))
+        print('Proportional arc length:',
+              round(np.abs(partialArclength / arcLength), dec))
 
 plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve Equipartitioned into 20 subpaths")
+
+n_BezierCurves = 10
+
+BezierCurves = []
+for i in range(n_BezierCurves):
+    points = []
+    for j in range(4):
+        points.append([round(uniform(-2.0,1.5),2), round(uniform(-1.0,2.0))])
+    BezierCurves.append(bezierCurve(points))
+#    plotParameterizedCurves(BezierCurves[i][0],BezierCurves[i][1],[0,1],1,"Random Bezier Curve "+str(i))
+

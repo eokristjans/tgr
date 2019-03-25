@@ -16,8 +16,8 @@ def plotParameterizedCurves(x, y, ts, n, header):
         t = np.arange(ts[i], ts[i+1], 0.001)
         axis.plot(x(t), y(t))
     axis.set(xlabel='x(t)', ylabel='y(t)',title=header)
-    plt.yticks(np.arange(0,2.5,0.5))
-    plt.xticks(np.arange(-1,1.5,0.5))
+    plt.yticks(np.arange(-0.5,2.5,0.5))
+    plt.xticks(np.arange(-1.5,2.0,0.5))
     axis.axhline(y=0, color='k')
     axis.axvline(x=0, color='k')
     axis.grid()
@@ -50,7 +50,7 @@ def adQuad(f, a, b, tol):
 
 # Returns a function that approximates of the derivative of f(x)
 # at x = a
-def threePointCentDiff(f, h=1e-10):
+def threePointCentDiff(f, h=1e-5):
     return lambda a: (f(a+h) - f(a-h))/(2*h)
 
 """ SA 2 """
@@ -87,7 +87,6 @@ def simpsonsRule(f, a, b):
 
 def adQuadSimpson(f, a, b, tol, c=0):
     c, sab = simpsonsRule(f, a, b)
-    h = (b-a)/6
     lc, sac  = simpsonsRule(f, a, c)
     rc, scb = simpsonsRule(f, c, b)
     if abs(sab - sac - scb) < 15*tol: #  and h < 1e-1
@@ -112,3 +111,23 @@ def tStarOfSNewton(f, s, intMethod, xold, tol):
     a = compArcLength(f, 0.0, 1.0, intMethod, tol)
     g = lambda b: (s * a - compArcLength(f, 0.0, b, intMethod, tol))
     return newtonsMethod(g, xold, tol)
+
+
+
+
+""" SA 6 """
+# Points: List of points (x,y)
+# Initial point is: x0 = Points[0][0] and y0 = Points[0][1]
+# End point is: x3 = Points[3][0] and y3 = [3][1]
+# Control points in between
+def bezierCurve(Points):
+    bx = 3*(Points[1][0] - Points[0][0])
+    cx = 3*(Points[2][0] - Points[1][0]) - bx
+    dx = Points[3][0] - Points[0][0] - bx - cx
+    by = 3*(Points[1][1] - Points[0][1])
+    cy = 3*(Points[2][1] - Points[1][1]) - by
+    dy = Points[3][1] - Points[0][1] - by - cy
+    return (lambda t: Points[0][0] + bx*t + cx*t**2 + dx*t**3, lambda t: Points[0][1] + by*t + cy*t**2 + dy*t**3)
+
+
+
