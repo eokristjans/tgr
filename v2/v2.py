@@ -3,7 +3,6 @@ from functionsV2 import *
 import numpy as np
 import matplotlib.pyplot as plt
 from time import perf_counter
-from random import uniform
 
 # Temporary global tol
 tol = 0.5e-5
@@ -168,13 +167,72 @@ for i in range(n): # let's verify that each arclength is about one-twentieth of 
 
 plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve Equipartitioned into 20 subpaths")
 
-n_BezierCurves = 10
 
-BezierCurves = []
-for i in range(n_BezierCurves):
-    points = []
-    for j in range(4):
-        points.append([round(uniform(-2.0,1.5),2), round(uniform(-1.0,2.0))])
-    BezierCurves.append(bezierCurve(points))
-#    plotParameterizedCurves(BezierCurves[i][0],BezierCurves[i][1],[0,1],1,"Random Bezier Curve "+str(i))
+""" Suggested Activity 5 """
+"""
+animateBezierCurve(x, y, np.arange(0.0,1.05,0.05),
+                   "Traveling at speed with intervals $dt=0.05$ from $t=0$ to $t=1$")
+animateBezierCurve(x, y, tStarArray,
+                   "Traveling at constant speed given by t*(s)")
+"""
+
+
+""" Suggested Activity 6 """
+n_BezierCurves = 3
+BezierCurves, DerivBezierCurves = bezierCurves(n_BezierCurves)
+
+
+n = 20 # Equipartition each BezierCurve into 20 subpaths
+tStarArrays = [np.zeros(n+1),np.zeros(n+1),np.zeros(n+1)]
+for j in range(n_BezierCurves):
+    random_f = sqrtFunSquared(DerivBezierCurves[j][0], DerivBezierCurves[j][1])
+    random_arcLength = compArcLength(random_f, 0.0, 1.0, adQuadSimpson, tol)
+    print('Arclength of random bezier curve number', j+1, 'is', random_arcLength)
+    for i in range(n):
+        tStarArrays[j][i+1] = tStarOfSNewton(random_f, sArray_n20[i+1], adQuadSimpson, tStarArrays[j][i], tol)
+# Verify that each arclength is about one-twentieth of the length of the path
+        partialArclength = compArcLength(random_f, tStarArrays[j][i], tStarArrays[j][i+1], adQuadSimpson, tol)
+        if abs(partialArclength / random_arcLength - 1/n) > 10*tol:
+            print('Arc length from', round(tStarArrays[j][i], dec), end=' ')
+            print('to', round(tStarArrays[j][i+1], dec), end=' ') 
+            print('is', round(partialArclength, dec))
+            print('Proportional arc length:',
+                  round(np.abs(partialArclength / random_arcLength), dec))
+    plotParameterizedCurves(BezierCurves[j][0],BezierCurves[j][1], tStarArrays[j], n,
+                            "Parametrized Curve Equipartitioned into 20 subpaths",
+                            "RandomBezierCurveEquipartitioned"+str(j))
+
+"""
+animateBezierCurve(BezierCurves[0][0], BezierCurves[0][1], np.arange(0.0,1.05,0.05),
+                 "Traveling at speed with intervals $dt=0.05$ from $t=0$ to $t=1$")
+animateBezierCurve(BezierCurves[0][0], BezierCurves[0][1], tStarArrays[0],
+                       "Traveling at constant speed given by t*(s)")
+
+animateBezierCurve(BezierCurves[1][0], BezierCurves[1][1], np.arange(0.0,1.05,0.05),
+                 "Traveling at speed with intervals $dt=0.05$ from $t=0$ to $t=1$")
+animateBezierCurve(BezierCurves[1][0], BezierCurves[1][1], tStarArrays[1],
+                       "Traveling at constant speed given by t*(s)")
+
+animateBezierCurve(BezierCurves[2][0], BezierCurves[2][1], np.arange(0.0,1.05,0.05),
+                 "Traveling at speed with intervals $dt=0.05$ from $t=0$ to $t=1$")
+animateBezierCurve(BezierCurves[2][0], BezierCurves[2][1], tStarArrays[2],
+                       "Traveling at constant speed given by t*(s)")
+
+"""
+
+
+
+
+""" Suggested Activity 7 """
+
+
+
+
+
+
+
+
+
+
+
 

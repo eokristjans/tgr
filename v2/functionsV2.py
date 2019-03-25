@@ -3,14 +3,28 @@
 Functions used in v2
 @author: Erling Oskar
 """
-import numpy as np
+
+""" Global Imports """
+# Plots and animation
+import matplotlib
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import animation, rc
+from celluloid import Camera
 import matplotlib.pyplot as plt
-from time import perf_counter
+
+from time import perf_counter # For timing
+import numpy as np
+from random import uniform
+
+from sympy.core import sympify
+from sympy.utilities import lambdify
+from sympy import symbols, diff
 
 
     
 """ Plots many sections of a curve on one plot """
-def plotParameterizedCurves(x, y, ts, n, header):
+def plotParameterizedCurves(x, y, ts, n, header, save=None):
     fig, axis = plt.subplots()
     for i in range(n):
         t = np.arange(ts[i], ts[i+1], 0.001)
@@ -21,6 +35,10 @@ def plotParameterizedCurves(x, y, ts, n, header):
     axis.axhline(y=0, color='k')
     axis.axvline(x=0, color='k')
     axis.grid()
+    if save is not None:
+        fig.savefig('img/'+save+'.PNG')
+        plt.close()
+
   
 
 """ SA 1 """
@@ -114,20 +132,72 @@ def tStarOfSNewton(f, s, intMethod, xold, tol):
 
 
 
+""" SA 5 """
+# Animates a particle traveling along the path represented by
+# function x(t) and y(t)
+def animateBezierCurve(x,y,ts,header):
+    rc('animation', html='jshtml')
+    fig = plt.figure()
+    axis = fig.gca()
+    axis.set(xlabel='x(t)', ylabel='y(t)',title=header,)
+    axis.set_xticks(np.arange(-1.5,2.0,0.5))
+    axis.set_yticks(np.arange(-0.5,2.5,0.5))
+    plt.close()
+    cam = Camera(fig)
+    zeroToOne = np.arange(0, 1.01, 0.01)
+    for t in ts:
+        axis.plot(x(zeroToOne), y(zeroToOne),color='red')
+        axis.plot(x(t),y(t), 'bo', color='blue')
+        axis.axhline(y=0, color='k')
+        axis.axvline(x=0, color='k')
+        cam.snap()
+    anim = cam.animate(blit=False, interval=100)
+    return anim
+
+
+
 
 """ SA 6 """
 # Points: List of points (x,y)
 # Initial point is: x0 = Points[0][0] and y0 = Points[0][1]
 # End point is: x3 = Points[3][0] and y3 = [3][1]
 # Control points in between
+# Also returns string representation of them
 def bezierCurve(Points):
-    bx = 3*(Points[1][0] - Points[0][0])
-    cx = 3*(Points[2][0] - Points[1][0]) - bx
-    dx = Points[3][0] - Points[0][0] - bx - cx
-    by = 3*(Points[1][1] - Points[0][1])
-    cy = 3*(Points[2][1] - Points[1][1]) - by
-    dy = Points[3][1] - Points[0][1] - by - cy
-    return (lambda t: Points[0][0] + bx*t + cx*t**2 + dx*t**3, lambda t: Points[0][1] + by*t + cy*t**2 + dy*t**3)
+    bx = round(3*(Points[1][0] - Points[0][0]),2)
+    cx = round(3*(Points[2][0] - Points[1][0]) - bx,2)
+    dx = round(Points[3][0] - Points[0][0] - bx - cx,2)
+    by = round(3*(Points[1][1] - Points[0][1]),2)
+    cy = round(3*(Points[2][1] - Points[1][1]) - by,2)
+    dy = round(Points[3][1] - Points[0][1] - by - cy,2)
+    x = lambda t: Points[0][0] + bx*t + cx*t**2 + dx*t**3
+    y = lambda t: Points[0][1] + by*t + cy*t**2 + dy*t**3
+    xExpr = sympify(str(Points[0][0]) + "+" + str(bx) + "*t" + 
+                    "+"+ str(cx) + "*t**2" + "+" + str(dx) + "*t**3")
+    yExpr = sympify(str(Points[0][1]) + "+" + str(by) + "*t" + 
+                    "+"+ str(cy) + "*t**2" + "+" + str(dy) + "*t**3")
+    tSymbol = symbols('t')
+    dxdt = lambdify(tSymbol, diff(xExpr, tSymbol), "math")
+    dydt = lambdify(tSymbol, diff(yExpr, tSymbol), "math")
+    return (x, y), (dxdt, dydt)
+
+# Generates random bezier curves
+def bezierCurves(n_BezierCurves):
+    BezierCurves = []
+    DerivBezierCurves = []
+    for i in range(n_BezierCurves):
+        points = []
+        for j in range(4):
+            points.append([round(uniform(-2.0,1.5),2), round(uniform(-1.0,2.0))])
+        bc, dbc = bezierCurve(points)
+        BezierCurves.append(bc)
+        DerivBezierCurves.append(dbc)
+        plotParameterizedCurves(BezierCurves[i][0],BezierCurves[i][1],[0,1],1,
+                        "Random Bezier Curve "+str(i), "RandomBezierCurve"+str(i))
+    return BezierCurves, DerivBezierCurves
 
 
 
+
+
+""" SA 7 """
