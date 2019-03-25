@@ -224,6 +224,115 @@ animateBezierCurve(BezierCurves[2][0], BezierCurves[2][1], tStarArrays[2],
 
 
 """ Suggested Activity 7 """
+"""
+Write a program that traverses the path P according to 
+an arbitrary progress curve C(s),0≤s≤1, with C(0)=0 and C(1)=1
+The object is to move along the curve C in such a way that the proportion C(s)
+of the path’s total arc length is traversed between 0 and s. 
+
+For example, constant speed along the path would be represented by C(s)=s.
+
+Try progress curves  C(s)=s^1/3, C(s)=s^2, C(s)=sin(sπ/2) , for example.
+"""
+
+
+
+# C(s)=s^2
+n = 20
+sSquaredArray_n20 = [s**2 for s in sArray_n20]
+tStarArray = np.zeros(n+1)
+for i in range(n):
+    tStarArray[i+1] = tStarOfSNewton(f, sSquaredArray_n20[i+1], adQuadSimpson, tStarArray[i], tol)
+
+for i in range(n): # let's verify that NONE of the arclengths is about one-twentieth of the length of the path
+    partialArclength = compArcLength(f, tStarArray[i], tStarArray[i+1], adQuadSimpson, tol)
+    if not abs(partialArclength / arcLength - 1/n) > 10*tol:
+        print('Arc length from', round(tStarArray[i], dec), end=' ')
+        print('to', round(tStarArray[i+1], dec), end=' ') 
+        print('is', round(partialArclength, dec))
+        print('Proportional arc length:',
+              round(np.abs(partialArclength / arcLength), dec))
+
+plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve partitioned into 20 subpaths according $C(s)=s^2$")
+"""
+animateBezierCurve(x, y, tStarArray,
+                   "Traveling at varied speed given by $C(s)=s^2$")
+"""
+
+
+# C(s)=s^(1/3)
+n = 20
+sPowOneThirdArray_n20 = [s**(1/3) for s in sArray_n20]
+tStarArray = np.zeros(n+1)
+for i in range(n):
+    tStarArray[i+1] = tStarOfSNewton(f, sPowOneThirdArray_n20[i+1], adQuadSimpson, tStarArray[i], tol)
+
+for i in range(n): # let's verify that NONE of the arclengths is about one-twentieth of the length of the path
+    partialArclength = compArcLength(f, tStarArray[i], tStarArray[i+1], adQuadSimpson, tol)
+    if not abs(partialArclength / arcLength - 1/n) > 10*tol:
+        print('Arc length from', round(tStarArray[i], dec), end=' ')
+        print('to', round(tStarArray[i+1], dec), end=' ') 
+        print('is', round(partialArclength, dec))
+        print('Proportional arc length:',
+              round(np.abs(partialArclength / arcLength), dec))
+
+plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve partitioned into 20 subpaths according $C(s)=s^{1/3}$")
+"""
+animateBezierCurve(x, y, tStarArray,
+                   "Traveling at varied speed given by $C(s)=s^{1/3}$")
+"""
+
+
+# C(s) = sin(s\pi/2)
+n = 20
+sSinArray_n20 = [np.sin(s*np.pi/2) for s in sArray_n20]
+tStarArray = np.zeros(n+1)
+for i in range(n):
+    tStarArray[i+1] = tStarOfSNewton(f, sSinArray_n20[i+1], adQuadSimpson, tStarArray[i], tol)
+
+for i in range(n): # let's verify that NONE of the arclengths is about one-twentieth of the length of the path
+    partialArclength = compArcLength(f, tStarArray[i], tStarArray[i+1], adQuadSimpson, tol)
+    if not abs(partialArclength / arcLength - 1/n) > 10*tol:
+        print('Arc length from', round(tStarArray[i], dec), end=' ')
+        print('to', round(tStarArray[i+1], dec), end=' ') 
+        print('is', round(partialArclength, dec))
+        print('Proportional arc length:',
+              round(np.abs(partialArclength / arcLength), dec))
+
+plotParameterizedCurves(x,y,tStarArray,n,"Parametrized Curve partitioned into 20 subpaths according $C(s) = sin(s\pi/2)$")
+"""
+animateBezierCurve(x, y, tStarArray,
+                   "Traveling at varied speed given by $C(s)=s^{1/3}$")
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
