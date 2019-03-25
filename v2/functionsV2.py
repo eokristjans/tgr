@@ -138,11 +138,11 @@ def tStarOfSNewton(f, s, intMethod, xold, tol):
 def animateBezierCurve(x,y,ts,header):
     rc('animation', html='jshtml')
     fig = plt.figure()
+    plt.close()
     axis = fig.gca()
     axis.set(xlabel='x(t)', ylabel='y(t)',title=header,)
     axis.set_xticks(np.arange(-1.5,2.0,0.5))
     axis.set_yticks(np.arange(-0.5,2.5,0.5))
-    plt.close()
     cam = Camera(fig)
     zeroToOne = np.arange(0, 1.01, 0.01)
     for t in ts:
@@ -195,9 +195,3 @@ def bezierCurves(n_BezierCurves):
         plotParameterizedCurves(BezierCurves[i][0],BezierCurves[i][1],[0,1],1,
                         "Random Bezier Curve "+str(i), "RandomBezierCurve"+str(i))
     return BezierCurves, DerivBezierCurves
-
-
-
-
-
-""" SA 7 """
