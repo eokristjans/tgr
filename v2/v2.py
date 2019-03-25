@@ -53,7 +53,7 @@ print('Which is the root within our tolerance:', (np.abs(compArcLength(f, 0.0, t
 # For n = 4
 sArray_n4 = [0.0, 0.25, 0.5, 0.75, 1.0]
 n = 4
-
+tStarArray = np.zeros(n+1)
 start = perf_counter()
 for i in range(n):
     tStarArray[i+1] = tStarOfSBisect(f, sArray_n4[i+1], adQuadSimpson, tol)
