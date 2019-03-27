@@ -48,6 +48,16 @@ for i in range(5):
 
 
 
+
+
+
+
+
+
+
+
+
+
 def ExplicitTrapezoidMethod(f, y0, h, k, t0=0):
     t = t0
     wCurr = y0
